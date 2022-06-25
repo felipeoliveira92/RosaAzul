@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors, library_private_types_in_public_api, use_key_in_widget_constructors
+// ignore_for_file: prefer_const_constructors, library_private_types_in_public_api, use_key_in_widget_constructors, deprecated_member_use
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatefulWidget {
@@ -9,7 +9,7 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return Scaffold(      
       backgroundColor: Colors.deepPurple,
       body: Padding(
         padding: EdgeInsets.all(10),
@@ -17,26 +17,35 @@ class _LoginPageState extends State<LoginPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
+            children: <Widget>[              
               TextFormField(
                 keyboardType: TextInputType.number,
                 style: TextStyle(color: Colors.white, fontSize: 20),
-                  decoration: InputDecoration(
+                decoration: InputDecoration(
                     labelText: "CPF",
-                    labelStyle: TextStyle(color: Colors.white)
-                  ),
+                    labelStyle: TextStyle(color: Colors.white)),
               ),
               Divider(),
               TextFormField(
                 obscureText: true,
                 keyboardType: TextInputType.text,
                 style: TextStyle(color: Colors.white, fontSize: 20),
-                  decoration: InputDecoration(
+                decoration: InputDecoration(
                     labelText: "Senha",
-                    labelStyle: TextStyle(color: Colors.white)
-                  ),
+                    labelStyle: TextStyle(color: Colors.white)),
               ),
               Divider(),
+              ButtonTheme(
+                height: 60.0,
+                child: RaisedButton.icon(
+                  onPressed: () {
+                    print("VC clicou");
+                  },                  
+                  color: Colors.white,
+                  icon: Icon(Icons.android),
+                  label: Text("Entrar"),                   
+                ),
+              ),
             ],
           ),
         ),
