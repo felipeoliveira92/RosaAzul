@@ -1,3 +1,4 @@
+import 'package:appsalao/pages/HomePage.dart';
 import 'package:appsalao/pages/login.page.dart';
 import 'package:flutter/material.dart';
 
@@ -11,10 +12,11 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.deepPurple,
       ),
-      home: LoginPage(),
+      home: const HomePage(),
     );
   }
 }
