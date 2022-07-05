@@ -10,15 +10,18 @@ class _calendarpageState extends State<calendarpage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Center(child: const Text("Calendario")),
+        title: const Text("Calendario"),
       ),
-      body: Center(
-          child: CalendarDatePicker(
-        initialDate: DateTime.now(),
-        firstDate: DateTime.utc(2022, 01, 01),
-        lastDate: DateTime.utc(2050, 01, 01),
-        onDateChanged: (DateTime value) {},
-      )),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Center(
+            child: CalendarDatePicker(
+          initialDate: DateTime.now(),
+          firstDate: DateTime.utc(2022, 01, 01),
+          lastDate: DateTime.utc(2050, 01, 01),
+          onDateChanged: (DateTime value) {},
+        )),
+      ),
     );
   }
 }

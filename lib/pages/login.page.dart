@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors, library_private_types_in_public_api, use_key_in_widget_constructors, deprecated_member_use
 import 'package:appsalao/pages/HomePage.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -50,6 +51,25 @@ class _LoginPageState extends State<LoginPage> {
                     icon: Icon(Icons.input),
                   ),
                 ),
+
+
+                Row(                  
+                  children: [
+                    Text("Lembrar-me"),
+                    Checkbox(
+                      
+                      checkColor: Colors.white,
+                      value: false,
+                      onChanged: (bool? value) {
+                        setState(() {
+                          
+                        });
+                      },
+                    ),
+                  ],
+                  
+                ),
+
               ],
             ),
           ),
