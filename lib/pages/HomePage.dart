@@ -1,4 +1,3 @@
-// ignore_for_file: non_constant_identifier_names
 
 import 'package:appsalao/pages/calculatepage.dart';
 import 'package:appsalao/pages/calendarpage.dart';

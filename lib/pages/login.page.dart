@@ -11,6 +11,7 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
+  
     return Scaffold(
       backgroundColor: Colors.deepPurple,
       body: SingleChildScrollView(
@@ -21,12 +22,12 @@ class _LoginPageState extends State<LoginPage> {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                Image.asset("images/logo-s-fundo.png"),
+                Image.asset("images/logo-s-fundo.png", height: 300),
                 TextFormField(
-                  keyboardType: TextInputType.number,
+                  keyboardType: TextInputType.emailAddress,
                   style: TextStyle(color: Colors.white, fontSize: 20),
                   decoration: InputDecoration(
-                      labelText: "CPF",
+                      labelText: "Email",
                       labelStyle: TextStyle(color: Colors.white)),
                 ),
                 Divider(),
@@ -47,28 +48,11 @@ class _LoginPageState extends State<LoginPage> {
                           MaterialPageRoute(builder: (context) => HomePage()));
                     },
                     color: Colors.white,
-                    label: Text("Entrar"),
+                    label: Text("ENTRAR"),                                        
                     icon: Icon(Icons.input),
                   ),
                 ),
 
-
-                Row(                  
-                  children: [
-                    Text("Lembrar-me"),
-                    Checkbox(
-                      
-                      checkColor: Colors.white,
-                      value: false,
-                      onChanged: (bool? value) {
-                        setState(() {
-                          
-                        });
-                      },
-                    ),
-                  ],
-                  
-                ),
 
               ],
             ),
