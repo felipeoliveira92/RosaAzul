@@ -1,7 +1,6 @@
 import 'package:appsalao/repositories/clientrepository.dart';
 import 'package:flutter/material.dart';
-
-import 'calculatepage.dart';
+import 'newalterworkpage.dart';
 
 class calendarpage extends StatefulWidget {
   const calendarpage({Key? key}) : super(key: key);
@@ -22,7 +21,7 @@ class _calendarpageState extends State<calendarpage> {
             icon: Icon(Icons.add),
             onPressed: () {
               Navigator.of(context).push(
-              MaterialPageRoute(builder: (context) => const calculatepage()));
+              MaterialPageRoute(builder: (context) => const NewAlterWorkPage()));
               },
             ),
           ],
@@ -55,7 +54,7 @@ class _calendarpageState extends State<calendarpage> {
                           trailing: Text(lista[index].date),
                           onTap: () {
                             Navigator.of(context).push(
-                            MaterialPageRoute(builder: (context) => const calculatepage()));
+                            MaterialPageRoute(builder: (context) => const NewAlterWorkPage()));
                             },
                         );
                       },
