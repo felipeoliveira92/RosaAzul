@@ -1,4 +1,7 @@
+import 'package:appsalao/repositories/clientrepository.dart';
 import 'package:flutter/material.dart';
+
+import 'calculatepage.dart';
 
 class calendarpage extends StatefulWidget {
   const calendarpage({Key? key}) : super(key: key);
@@ -8,51 +11,55 @@ class calendarpage extends StatefulWidget {
 class _calendarpageState extends State<calendarpage> {
   @override
   Widget build(BuildContext context) {
+    final lista = ClientRepository.listaClient;
+
     return Scaffold(
       appBar: AppBar(
         title: const Text("Calendario"),
+        elevation: 20,
+        actions: [
+          IconButton(
+            icon: Icon(Icons.add),
+            onPressed: () {
+              Navigator.of(context).push(
+              MaterialPageRoute(builder: (context) => const calculatepage()));
+              },
+            ),
+          ],
       ),
+      
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.all(16.0),
+          padding: const EdgeInsets.all(20),
           child: Column(
-            children: <Widget>[
+            children: [
               CalendarDatePicker(
-                initialDate: DateTime.now(),
-                firstDate: DateTime.utc(2022, 01, 01),
-                lastDate: DateTime.utc(2050, 01, 01),
-                onDateChanged: (DateTime value) {},
-              ),
+                    initialDate: DateTime.now(),
+                    firstDate: DateTime.utc(2022, 01, 01),
+                    lastDate: DateTime.utc(2050, 01, 01),
+                    onDateChanged: (DateTime value) {},
+                  ),
+              
               Divider(),
-              Text("Horarios Hoje"),
-              ListTile(
-                leading: Icon(Icons.calculate_rounded),
-                title: Text("Calculadora"),
-                subtitle: Text("Calcule quanto ira gastar."),
-                onTap: () {              
-                },
-              ),
-              ListTile(
-                leading: Icon(Icons.calendar_month),
-                title: Text("Calendario"),
-                subtitle: Text("Veja e marque horarios."),
-                onTap: () {
-                },
-              ),
-              ListTile(
-                leading: Icon(Icons.calendar_month),
-                title: Text("Calendario"),
-                subtitle: Text("Veja e marque horarios."),
-                onTap: () {
-                },
-              ),
-              ListTile(
-                leading: Icon(Icons.calendar_month),
-                title: Text("Calendario"),
-                subtitle: Text("Veja e marque horarios."),
-                onTap: () {
-                },
-              ),
+              Text("Horarios hoje"),
+              Divider(),
+      
+              ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: lista.length,
+                      itemBuilder: (context, index) {
+                        return ListTile(
+                          leading: Icon(Icons.account_circle),
+                          title: Text(lista[index].name),
+                          subtitle: Text(lista[index].workTask),
+                          trailing: Text(lista[index].date),
+                          onTap: () {
+                            Navigator.of(context).push(
+                            MaterialPageRoute(builder: (context) => const calculatepage()));
+                            },
+                        );
+                      },
+                    ),
             ],
           ),
         ),

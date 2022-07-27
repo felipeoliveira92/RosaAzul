@@ -1,4 +1,4 @@
-import 'package:appsalao/pages/HomePage.dart';
+import 'package:appsalao/pages/calendarpage.dart';
 import 'package:appsalao/pages/login.page.dart';
 import 'package:flutter/material.dart';
 
@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.deepPurple,
       ),
-      home: LoginPage(),
+      home: calendarpage(),      
     );
   }
 }
