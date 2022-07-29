@@ -3,10 +3,11 @@ import 'dart:convert';
 import 'package:appsalao/controllers/api.dart';
 import 'package:appsalao/models/user.dart';
 import 'package:appsalao/models/worktask.dart';
+import 'package:appsalao/pages/addworkpage.dart';
 import 'package:appsalao/repositories/clientrepository.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
-import 'newalterworkpage.dart';
+import 'alterworkpage.dart';
 
 class calendarpage extends StatefulWidget {
   const calendarpage({Key? key}) : super(key: key);
@@ -17,15 +18,16 @@ class _calendarpageState extends State<calendarpage> {
   List<User> users = [];
   User user = new User();
   List<WorkTask> workTasks = [];
+  var dateSelected = DateTime.now().day.toString();
 
-  _getUsers() {
-    API.getUsers().then((response) {
-      setState(() {
-        Iterable listausers = json.decode(response.body);
-        users = listausers.map((model) => User.fromJson(model)).toList();
-      });
-    });
-  }
+  // _getUsers() {
+  //   API.getUsers().then((response) {
+  //     setState(() {
+  //       Iterable listausers = json.decode(response.body);
+  //       users = listausers.map((model) => User.fromJson(model)).toList();
+  //     });
+  //   });
+  // }
 
   // _getUsersById(int id) {
   //   API.getUsersById(id).then((response) {
@@ -36,20 +38,19 @@ class _calendarpageState extends State<calendarpage> {
   //   });
   // }
 
-  _getWorkTasks() {
-    API.getWorkTasks().then((response) {
-      setState(() {
-        Iterable objWork = json.decode(response.body);
-        workTasks = objWork.map((model) => WorkTask.fromJson(model)).toList();
-      });
-    });
-  }
+  // _getWorkTasks() {
+  //   API.getWorkTasks().then((response) {
+  //     setState(() {
+  //       Iterable objWork = json.decode(response.body);
+  //       workTasks = objWork.map((model) => WorkTask.fromJson(model)).toList();
+  //     });
+  //   });
+  // }
 
   _getWorkTasksById(int id) {
     API.getWorkTasksById(id).then((response) {
       setState(() {
         workTasks = [];
-        print(response.body.toString());
 
         if (response != null) {
           var objWork = json.decode(response.body);
@@ -66,7 +67,6 @@ class _calendarpageState extends State<calendarpage> {
   @override
   Widget build(BuildContext context) {
     final lista = ClientRepository.listaClient;
-    var dateSelected = "";
 
     return Scaffold(
       appBar: AppBar(
@@ -76,8 +76,8 @@ class _calendarpageState extends State<calendarpage> {
           IconButton(
             icon: const Icon(Icons.add),
             onPressed: () {
-              // Navigator.of(context).push(MaterialPageRoute(
-              //     builder: (context) => NewAlterWorkPage()));
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => AddWorkPage(dateSelected : dateSelected)));
             },
           ),
         ],
@@ -92,8 +92,10 @@ class _calendarpageState extends State<calendarpage> {
                 firstDate: DateTime.utc(2022, 01, 01),
                 lastDate: DateTime.utc(2050, 01, 01),
                 onDateChanged: (DateTime value) {
-                  _getWorkTasksById(value.day);
-                  dateSelected = value.toString();
+                  setState(() {
+                    _getWorkTasksById(value.day);
+                    dateSelected = value.toString().split(' ')[0];                    
+                  });
                 },
               ),
               const SizedBox(
@@ -114,7 +116,7 @@ class _calendarpageState extends State<calendarpage> {
                     onTap: () {
                       WorkTask taskSelected = workTasks[index];
                       Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => NewAlterWorkPage(workTask : taskSelected)));
+                          builder: (context) => AlterWorkPage(workTask : taskSelected)));
                     },
                   );
                 },

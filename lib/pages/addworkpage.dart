@@ -1,37 +1,34 @@
-import 'package:appsalao/models/worktask.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/src/foundation/key.dart';
+import 'package:flutter/src/widgets/framework.dart';
 
-class NewAlterWorkPage extends StatefulWidget {
-  WorkTask workTask;
+class AddWorkPage extends StatefulWidget {
+  String dateSelected;
 
-  NewAlterWorkPage({Key? key, required this.workTask}) : super(key: key);
+  AddWorkPage({
+    Key? key, required this.dateSelected
+  }) : super(key: key);
 
   @override
-  State<NewAlterWorkPage> createState() => _NewAlterWorkPageState();
+  State<AddWorkPage> createState() => _AddWorkPageState();
 }
 
-class _NewAlterWorkPageState extends State<NewAlterWorkPage> {
+class _AddWorkPageState extends State<AddWorkPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Center(
-          child: Text("Horario"),
+          child: Text("Adicionando Novo Horario"),
         ),
         elevation: 20,
-        actions: [
-          IconButton(
-            icon: Icon(Icons.save),
-            onPressed: () {},
-          ),
-        ],
       ),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(10),
           child: Column(
             children: [
-              Text("Data Selecionada: ${widget.workTask.horario}"),
+              Text("Data Selecionada: ${widget.dateSelected}"),
               Padding(
                 padding: const EdgeInsets.all(10),
                 child: Center(
@@ -45,8 +42,6 @@ class _NewAlterWorkPageState extends State<NewAlterWorkPage> {
                       ),
                       TextFormField(
                         keyboardType: TextInputType.text,
-                        
-                        style: const TextStyle(color: Colors.black, fontSize: 20),
                         decoration: const InputDecoration(
                             border: OutlineInputBorder(),
                             labelText: "Cliente",
@@ -58,8 +53,6 @@ class _NewAlterWorkPageState extends State<NewAlterWorkPage> {
                       ),
                       TextFormField(
                         keyboardType: TextInputType.text,
-                        style:
-                            const TextStyle(color: Colors.black, fontSize: 20),
                         decoration: const InputDecoration(
                             border: OutlineInputBorder(),
                             labelText: "Trabalho",
@@ -71,8 +64,6 @@ class _NewAlterWorkPageState extends State<NewAlterWorkPage> {
                       ),
                       TextFormField(
                         keyboardType: TextInputType.number,
-                        style:
-                            const TextStyle(color: Colors.black, fontSize: 20),
                         decoration: const InputDecoration(
                             border: OutlineInputBorder(),
                             labelText: "Preço",
@@ -84,28 +75,24 @@ class _NewAlterWorkPageState extends State<NewAlterWorkPage> {
                       ),
                       TextFormField(
                         keyboardType: TextInputType.datetime,
-                        style:
-                            const TextStyle(color: Colors.black, fontSize: 20),
                         decoration: const InputDecoration(
                             border: OutlineInputBorder(),
                             labelText: "Horario",
                             labelStyle: TextStyle(color: Colors.black)),
                       ),
-
                       Container(
                         alignment: Alignment.bottomCenter,
                         margin: EdgeInsets.all(24.0),
                         child: ElevatedButton(
-                          onPressed: () {
-                            
-                          },
+                          onPressed: () {},
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Icon(Icons.check),
                               Padding(
                                 padding: EdgeInsets.all(16.0),
-                                child: Text('Salvar', style: TextStyle(fontSize: 20)),
+                                child: Text('Salvar',
+                                    style: TextStyle(fontSize: 20)),
                               )
                             ],
                           ),
