@@ -91,6 +91,26 @@ class _NewAlterWorkPageState extends State<NewAlterWorkPage> {
                             labelText: "Horario",
                             labelStyle: TextStyle(color: Colors.black)),
                       ),
+
+                      Container(
+                        alignment: Alignment.bottomCenter,
+                        margin: EdgeInsets.all(24.0),
+                        child: ElevatedButton(
+                          onPressed: () {
+                            
+                          },
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(Icons.check),
+                              Padding(
+                                padding: EdgeInsets.all(16.0),
+                                child: Text('Salvar', style: TextStyle(fontSize: 20)),
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
                     ],
                   ),
                 ),
