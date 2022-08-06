@@ -18,35 +18,8 @@ class _calendarpageState extends State<calendarpage> {
   List<User> users = [];
   User user = new User();
   List<WorkTask> workTasks = [];
-  var dateSelected = DateTime.now().day.toString();
-
-  // _getUsers() {
-  //   API.getUsers().then((response) {
-  //     setState(() {
-  //       Iterable listausers = json.decode(response.body);
-  //       users = listausers.map((model) => User.fromJson(model)).toList();
-  //     });
-  //   });
-  // }
-
-  // _getUsersById(int id) {
-  //   API.getUsersById(id).then((response) {
-  //     setState(() {
-  //       var objuser = json.decode(response.body);
-  //       user = objuser.map((model) => User.fromJson(model)).toList();
-  //     });
-  //   });
-  // }
-
-  // _getWorkTasks() {
-  //   API.getWorkTasks().then((response) {
-  //     setState(() {
-  //       Iterable objWork = json.decode(response.body);
-  //       workTasks = objWork.map((model) => WorkTask.fromJson(model)).toList();
-  //     });
-  //   });
-  // }
-
+  var dateSelected = DateTime.now().toString().split(' ')[0];
+  
   _getWorkTasksById(int id) {
     API.getWorkTasksById(id).then((response) {
       setState(() {
@@ -77,7 +50,8 @@ class _calendarpageState extends State<calendarpage> {
             icon: const Icon(Icons.add),
             onPressed: () {
               Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => AddWorkPage(dateSelected : dateSelected)));
+                  builder: (context) =>
+                      AddWorkPage(dateSelected: dateSelected)));
             },
           ),
         ],
@@ -94,7 +68,7 @@ class _calendarpageState extends State<calendarpage> {
                 onDateChanged: (DateTime value) {
                   setState(() {
                     _getWorkTasksById(value.day);
-                    dateSelected = value.toString().split(' ')[0];                    
+                    dateSelected = value.toString().split(' ')[0];
                   });
                 },
               ),
@@ -102,7 +76,7 @@ class _calendarpageState extends State<calendarpage> {
                 width: 20,
                 height: 20,
               ),
-              const Text("Horarios hoje"),
+              Text("Horarios marcados em ${dateSelected}"),
               const Divider(),
               ListView.builder(
                 shrinkWrap: true,
@@ -116,7 +90,8 @@ class _calendarpageState extends State<calendarpage> {
                     onTap: () {
                       WorkTask taskSelected = workTasks[index];
                       Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => AlterWorkPage(workTask : taskSelected)));
+                          builder: (context) =>
+                              AlterWorkPage(workTask: taskSelected)));
                     },
                   );
                 },

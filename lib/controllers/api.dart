@@ -1,5 +1,7 @@
 import 'dart:convert';
+import 'dart:ffi';
 
+import 'package:appsalao/models/worktask.dart';
 import 'package:http/http.dart' as http;
 
 var baseUrl = 'https://62e29b1f3891dd9ba8ec4b6d.mockapi.io/api/v1/workTask';
@@ -26,36 +28,36 @@ class API {
     var novaUrl = baseUrl + "/" + id.toString();
     id = 0;
     Uri url = Uri.parse(novaUrl);
-    print(novaUrl);
     return await http.get(url);
   }
 
-  static Future postNewWorkTask() async {
-    var headers = {
-      'Content-Type': 'text/plain'
-    };
+  static Future postNewWorkTask(WorkTask model) async {
+    var headers = {'Content-Type': 'text/plain'};
 
     var request = http.Request('POST', Uri.parse(baseUrl));
-        
-    var body = {
-      "horario": 16590293383,
-      "nomeCliente": "nomeCliente 33",
-      "preco": "preco 33",
-      "descricao": "descricao 33",
-      "id": "33"
-    };
 
+    // var body = {
+    //   "horario": model.horario,
+    //   "nomeCliente": model.nomeCliente,
+    //   "preco": model.preco,
+    //   "descricao": model.descricao,
+    //   "id": model.id
+    // };
+    //request.body = json.encode(body);
+
+    var body = model.toJson();
     request.body = json.encode(body);
-    
+
     request.headers.addAll(headers);
 
     http.StreamedResponse response = await request.send();
 
-    if (response.statusCode == 200) {
-      print(await response.stream.bytesToString());
-    }
-    else {
-      print(response.reasonPhrase);
+    if (response.statusCode == 201) {
+      //print(await response.stream.bytesToString());
+      return true;
+    } else {
+      //print(response.reasonPhrase);
+      return false;
     }
   }
 }

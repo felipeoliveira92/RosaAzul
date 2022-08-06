@@ -3,7 +3,7 @@ import 'package:appsalao/pages/calendarpage.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+  HomePage({Key? key}) : super(key: key);
   @override
   State<HomePage> createState() => _HomePageState();
 }
@@ -16,12 +16,30 @@ class _HomePageState extends State<HomePage> {
         title: Text("HOME"),
       ),
       body: BuildListView(),
+      drawer: Drawer(
+        child: ListView(
+          children: const <Widget>[
+            DrawerHeader(
+              child: Text("Menu"),
+              decoration: BoxDecoration(
+                color: Colors.deepPurple,
+              ),
+            ),            
+          ],
+        ),
+      ),
     );
   }
 
   BuildListView() {
     return ListView(
       children: <Widget>[
+        DrawerHeader(
+              child: Text("Menu"),
+              decoration: BoxDecoration(
+                color: Colors.deepPurple,
+              ),
+            ),
         ListTile(
           leading: Icon(Icons.calculate_rounded),
           title: Text("Calculadora"),
@@ -35,6 +53,15 @@ class _HomePageState extends State<HomePage> {
           leading: Icon(Icons.calendar_month),
           title: Text("Calendario"),
           subtitle: Text("Veja e marque horarios."),
+          onTap: () {
+            Navigator.of(context).push(
+            MaterialPageRoute(builder: (context) => const calendarpage()));
+          },
+        ),
+        ListTile(
+          leading: Icon(Icons.money),
+          title: Text("Faturamento"),
+          subtitle: Text("Veja quanto esta lucrando."),
           onTap: () {
             Navigator.of(context).push(
             MaterialPageRoute(builder: (context) => const calendarpage()));

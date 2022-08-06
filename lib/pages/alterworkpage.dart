@@ -15,9 +15,7 @@ class _AlterWorkPageState extends State<AlterWorkPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Center(
-          child: Text("Alterando Horario"),
-        ),
+        title: Text("Alterando Horario"),
         elevation: 20,        
       ),
       body: SingleChildScrollView(
