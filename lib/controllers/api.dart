@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:ffi';
 
 import 'package:appsalao/models/worktask.dart';
 import 'package:http/http.dart' as http;
@@ -13,9 +12,8 @@ class API {
   }
 
   static Future getUsersById(int id) async {
-    baseUrl += "/" + id.toString();
+    baseUrl += "/${id.toString()}";
     Uri url = Uri.parse(baseUrl);
-    print(url);
     return await http.get(url);
   }
 
@@ -25,7 +23,7 @@ class API {
   }
 
   static Future getWorkTasksById(int id) async {
-    var novaUrl = baseUrl + "/" + id.toString();
+    var novaUrl = "${baseUrl.toString()}/${id.toString()}";
     id = 0;
     Uri url = Uri.parse(novaUrl);
     return await http.get(url);
