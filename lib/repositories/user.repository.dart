@@ -1,0 +1,47 @@
+import 'package:appsalao/models/user.dart';
+import 'package:dio/dio.dart';
+
+class UserRepository {
+  var url = 'https://62e29b1f3891dd9ba8ec4b6d.mockapi.io/api/v1/Users';
+  final _dio = Dio();
+
+  Future<List<User>> GetAll() async {
+    final response = await _dio.get(url);
+    final body = response.data as List;
+    final users = body.map((u) => User.fromJson(u)).toList();
+
+    return users;
+  }
+
+  Future<User> GetUserById(int id) async {
+    url += '/$id';
+    final response = await _dio.get(url);
+    final user = response.data as User;
+
+    return user;
+  }
+
+  Future<Response> PostUser(User model) async {
+    final user = model.toJson();
+
+    final response = await _dio.post(url, data: user);
+
+    return response;
+  }
+
+  Future<Response> UpdateUser(User model) async {
+    final user = model.toJson();
+
+    url += '/${model.id}';
+    final response = await _dio.put(url, data: user);
+
+    return response;
+  }
+
+  Future<Response> DeleteUser(int id) async {
+    url += '/$id';
+    final response = await _dio.delete(url);
+
+    return response;
+  }
+}

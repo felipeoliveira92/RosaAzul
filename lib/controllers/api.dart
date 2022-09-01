@@ -5,17 +5,7 @@ import 'package:http/http.dart' as http;
 
 var baseUrl = 'https://62e29b1f3891dd9ba8ec4b6d.mockapi.io/api/v1/workTask';
 
-class API {
-  static Future getUsers() async {
-    Uri url = Uri.parse(baseUrl);
-    return await http.get(url);
-  }
-
-  static Future getUsersById(int id) async {
-    baseUrl += "/${id.toString()}";
-    Uri url = Uri.parse(baseUrl);
-    return await http.get(url);
-  }
+class API {  
 
   static Future getWorkTasks() async {
     Uri url = Uri.parse(baseUrl);
