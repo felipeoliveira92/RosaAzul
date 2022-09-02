@@ -7,6 +7,7 @@ import 'package:appsalao/pages/addworkpage.dart';
 import 'package:appsalao/repositories/clientrepository.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
+import '../repositories/worktask.repository.dart';
 import 'alterworkpage.dart';
 
 class calendarpage extends StatefulWidget {
@@ -16,25 +17,22 @@ class calendarpage extends StatefulWidget {
 
 class _calendarpageState extends State<calendarpage> {
   List<User> users = [];
-  User user = new User();
-  List<WorkTask> workTasks = [];
-  var dateSelected = DateTime.now().toString().split(' ')[0];
-  
-  _getWorkTasksById(int id) {
-    API.getWorkTasksById(id).then((response) {
-      setState(() {
-        workTasks = [];
+  User user = User();
 
-        if (response != null) {
-          var objWork = json.decode(response.body);
-          workTasks.add(WorkTask.fromJson(objWork));
-        }
+  var dateSelected = DateTime.now().toString().split(' ')[0];
+  final _workTaskRepository = WorkTaskRepository();
+  List<WorkTask> workTasks = [];
+  
+  void InicializeFields() {
+    _workTaskRepository.GetWorkTaskById(DateTime.now().day).then((list) {
+      setState(() {
+        workTasks = list;
       });
     });
   }
 
   _calendarpageState() {
-    _getWorkTasksById(DateTime.now().day);
+    InicializeFields();
   }
 
   @override
@@ -67,7 +65,12 @@ class _calendarpageState extends State<calendarpage> {
                 lastDate: DateTime.utc(2050, 01, 01),
                 onDateChanged: (DateTime value) {
                   setState(() {
-                    _getWorkTasksById(value.day);
+                    _workTaskRepository.GetWorkTaskById(value.day).then((list) {
+                      setState(() {
+                        workTasks = list;
+                      });
+                    });
+
                     dateSelected = value.toString().split(' ')[0];
                   });
                 },
@@ -76,7 +79,7 @@ class _calendarpageState extends State<calendarpage> {
                 width: 20,
                 height: 20,
               ),
-              Text("Horarios marcados em ${dateSelected}"),
+              Text("Horarios marcados em $dateSelected"),
               const Divider(),
               ListView.builder(
                 shrinkWrap: true,

@@ -21,6 +21,15 @@ class UserRepository {
     return user;
   }
 
+  Future<User> GetUserByLogin(String username) async {
+    url += '/$username';
+    final response = await _dio.get(url);
+    final user = response.data as User;
+
+    return user;
+    //arrumar
+  }
+
   Future<Response> PostUser(User model) async {
     final user = model.toJson();
 
@@ -43,5 +52,13 @@ class UserRepository {
     final response = await _dio.delete(url);
 
     return response;
+  }
+
+  Future<bool> Login(String username, String password) async {
+    var user = GetUserByLogin(username);
+
+    if (user != null) return true;
+
+    return false;
   }
 }

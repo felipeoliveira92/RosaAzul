@@ -2,29 +2,53 @@ import 'package:appsalao/models/worktask.dart';
 import 'package:dio/dio.dart';
 
 class WorkTaskRepository {
-  var url = 'https://62e29b1f3891dd9ba8ec4b6d.mockapi.io/api/v1/workTask';
+  var baseUrl = 'https://62e29b1f3891dd9ba8ec4b6d.mockapi.io/api/v1/workTask';
   final _dio = Dio();
 
   Future<List<WorkTask>> GetAll() async {
-    final response = await _dio.get(url);
-    final body = response.data as List;
-    final works = body.map((u) => WorkTask.fromJson(u)).toList();
+    List<WorkTask> listWorks = [];
 
-    return works;
+    final response = await _dio.get(baseUrl);
+
+    if (response.statusCode == 200) {
+      final body = response.data as List;
+      listWorks = body.map((u) => WorkTask.fromJson(u)).toList();
+    }
+
+    return listWorks;
   }
 
-  Future<WorkTask> GetWorkTaskById(int id) async {
-    url += '/$id';
-    final response = await _dio.get(url);
-    final workTask = response.data as WorkTask;
+  Future<List<WorkTask>> GetAllByDate(int date) async {
+    List<WorkTask> listWorks = [];
 
-    return workTask;
+    final response = await _dio.get(baseUrl);
+
+    if (response.statusCode == 200) {
+      final body = response.data as List;
+      listWorks = body.map((u) => WorkTask.fromJson(u)).toList();
+    }
+
+    return listWorks;
+  }
+
+  Future<List<WorkTask>> GetWorkTaskById(int id) async {
+    List<WorkTask> workTasks = [];
+    var url = '$baseUrl/$id';
+    final response = await _dio.get(url);
+
+    if (response.statusCode == 200) {
+      final workTask = WorkTask.fromJson(response.data);
+
+      workTasks.add(workTask);
+    }
+
+    return workTasks;
   }
 
   Future<Response> PostWorkTask(WorkTask model) async {
     final workTask = model.toJson();
 
-    final response = await _dio.post(url, data: workTask);
+    final response = await _dio.post(baseUrl, data: workTask);
 
     return response;
   }
@@ -32,14 +56,14 @@ class WorkTaskRepository {
   Future<Response> UpdateWorkTask(WorkTask model) async {
     final workTask = model.toJson();
 
-    url += '/${model.id}';
+    var url = '$baseUrl/${model.id}';
     final response = await _dio.put(url, data: workTask);
 
     return response;
   }
 
   Future<Response> DeleteWorkTask(int id) async {
-    url += '/$id';
+    var url = '$baseUrl/$id';
     final response = await _dio.delete(url);
 
     return response;
