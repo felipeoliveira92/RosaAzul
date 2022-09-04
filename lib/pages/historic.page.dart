@@ -6,7 +6,6 @@ import 'package:flutter/src/widgets/framework.dart';
 
 class HistoricPage extends StatefulWidget {
   const HistoricPage({Key? key}) : super(key: key);
-
   @override
   State<HistoricPage> createState() => _HistoricPageState();
 }
@@ -20,6 +19,7 @@ class _HistoricPageState extends State<HistoricPage> {
   }
 }
 
+// ignore: non_constant_identifier_names
 BuildListView() {
   return ListView.builder(
     shrinkWrap: true,
@@ -31,8 +31,8 @@ BuildListView() {
         subtitle: Text("Subtitulo $index"),
         trailing: Text("Trailing $index"),
         onTap: () {
-          Navigator.of(context).push(MaterialPageRoute(
-              builder: (context) => login()));
+          // Navigator.of(context).push(MaterialPageRoute(
+          //     builder: (context) => login()));
         },
       );
     },

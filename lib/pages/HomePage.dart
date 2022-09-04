@@ -27,24 +27,26 @@ class _HomePageState extends State<HomePage> {
                 children: <Widget>[
                   Expanded(
                     child: ListTile(
-                      leading: const Icon(Icons.account_circle),
-                      title: const Text("[usuario]"),
-                      subtitle: const Text("Opções."),
+                      leading: Image.asset("images/logo-s-fundo.png", height: 100),
+                      title: const Text("Felipe Rabelo", style: TextStyle(color: Colors.white)),
+                      subtitle: const Text("Opções.", style: TextStyle(color: Colors.white)),
+                      
                       onTap: () {
                         Navigator.of(context).push(
                         MaterialPageRoute(builder: (context) => const calendarpage()));
-                      },),
+                      },
+                    ),
                   ),
 
                   Expanded(
                     child: Image.asset("images/logo-s-fundo.png", height: 300),
                   ),
-                  
-                  ],),
+                ],
+              ),
               decoration: const BoxDecoration(
                 color: Colors.deepPurple,
               ),
-          ),
+        ),
 
         ListTile(
           leading: const Icon(Icons.calculate_rounded),
@@ -55,6 +57,7 @@ class _HomePageState extends State<HomePage> {
             MaterialPageRoute(builder: (context) => const calculatepage()));
           },
         ),
+        const Divider(),
         ListTile(
           leading: const Icon(Icons.calendar_month),
           title: const Text("Calendario"),
@@ -64,6 +67,7 @@ class _HomePageState extends State<HomePage> {
             MaterialPageRoute(builder: (context) => const calendarpage()));
           },
         ),
+        const Divider(),
         ListTile(
           leading: const Icon(Icons.money),
           title: const Text("Faturamento"),

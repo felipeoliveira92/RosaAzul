@@ -23,6 +23,7 @@ class _calendarpageState extends State<calendarpage> {
   final _workTaskRepository = WorkTaskRepository();
   List<WorkTask> workTasks = [];
   
+  // ignore: non_constant_identifier_names
   void InicializeFields() {
     _workTaskRepository.GetWorkTaskById(DateTime.now().day).then((list) {
       setState(() {
@@ -85,17 +86,20 @@ class _calendarpageState extends State<calendarpage> {
                 shrinkWrap: true,
                 itemCount: workTasks.length,
                 itemBuilder: (context, index) {
-                  return ListTile(
-                    leading: const Icon(Icons.account_circle),
-                    title: Text(workTasks[index].nomeCliente.toString()),
-                    subtitle: Text(workTasks[index].descricao.toString()),
-                    trailing: Text(workTasks[index].horario.toString()),
-                    onTap: () {
-                      WorkTask taskSelected = workTasks[index];
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) =>
-                              AlterWorkPage(workTask: taskSelected)));
-                    },
+                  return Card(
+                    color: const Color.fromARGB(255, 226, 226, 226),
+                    child: ListTile(
+                      leading: const Icon(Icons.account_circle),
+                      title: Text(workTasks[index].nomeCliente.toString()),
+                      subtitle: Text(workTasks[index].descricao.toString()),
+                      trailing: Text(workTasks[index].horario.toString()),
+                      onTap: () {
+                        WorkTask taskSelected = workTasks[index];
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) =>
+                                AlterWorkPage(workTask: taskSelected)));
+                      },
+                    ),
                   );
                 },
               ),

@@ -8,11 +8,16 @@ class WorkTaskRepository {
   Future<List<WorkTask>> GetAll() async {
     List<WorkTask> listWorks = [];
 
-    final response = await _dio.get(baseUrl);
+    try 
+    {
+      final response = await _dio.get(baseUrl);
 
-    if (response.statusCode == 200) {
-      final body = response.data as List;
-      listWorks = body.map((u) => WorkTask.fromJson(u)).toList();
+      if (response.statusCode == 200) {
+        final body = response.data as List;
+        listWorks = body.map((u) => WorkTask.fromJson(u)).toList();
+      }
+    } catch (e) {
+      print(e.toString());
     }
 
     return listWorks;
@@ -21,12 +26,17 @@ class WorkTaskRepository {
   Future<List<WorkTask>> GetAllByDate(int date) async {
     List<WorkTask> listWorks = [];
 
-    final response = await _dio.get(baseUrl);
+    try 
+    {
+      final response = await _dio.get(baseUrl);
 
-    if (response.statusCode == 200) {
-      final body = response.data as List;
-      listWorks = body.map((u) => WorkTask.fromJson(u)).toList();
-    }
+      if (response.statusCode == 200) {
+        final body = response.data as List;
+        listWorks = body.map((u) => WorkTask.fromJson(u)).toList();
+      }
+    } catch (e) {
+      print(e.toString());
+    }    
 
     return listWorks;
   }
@@ -34,12 +44,18 @@ class WorkTaskRepository {
   Future<List<WorkTask>> GetWorkTaskById(int id) async {
     List<WorkTask> workTasks = [];
     var url = '$baseUrl/$id';
-    final response = await _dio.get(url);
 
-    if (response.statusCode == 200) {
-      final workTask = WorkTask.fromJson(response.data);
+    try 
+    {
+      final response = await _dio.get(url);
 
-      workTasks.add(workTask);
+      if (response.statusCode == 200) {
+        final workTask = WorkTask.fromJson(response.data);
+
+        workTasks.add(workTask);
+      }
+    } catch (e) {
+      print(e.toString());
     }
 
     return workTasks;
