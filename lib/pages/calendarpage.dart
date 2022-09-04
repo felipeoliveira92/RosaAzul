@@ -1,12 +1,7 @@
-import 'dart:convert';
-
-import 'package:appsalao/controllers/api.dart';
 import 'package:appsalao/models/user.dart';
 import 'package:appsalao/models/worktask.dart';
 import 'package:appsalao/pages/addworkpage.dart';
-import 'package:appsalao/repositories/clientrepository.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart';
 import '../repositories/worktask.repository.dart';
 import 'alterworkpage.dart';
 
@@ -38,8 +33,6 @@ class _calendarpageState extends State<calendarpage> {
 
   @override
   Widget build(BuildContext context) {
-    final lista = ClientRepository.listaClient;
-
     return Scaffold(
       appBar: AppBar(
         title: const Text("Calendario"),
@@ -105,6 +98,12 @@ class _calendarpageState extends State<calendarpage> {
               ),
             ],
           ),
+        ),
+      ),
+      floatingActionButton: FloatingActionButton.small(
+        child: const Icon(Icons.add),
+        onPressed: () => Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => AddWorkPage(dateSelected: dateSelected))
         ),
       ),
     );
