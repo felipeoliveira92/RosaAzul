@@ -15,8 +15,7 @@ class _AlterWorkPageState extends State<AlterWorkPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Alterando Horario"),
-        elevation: 20,        
+        title: const Text("Alterando Horario"),
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -82,14 +81,14 @@ class _AlterWorkPageState extends State<AlterWorkPage> {
 
                       Container(
                         alignment: Alignment.bottomCenter,
-                        margin: EdgeInsets.all(24.0),
+                        margin: const EdgeInsets.all(24.0),
                         child: ElevatedButton(
                           onPressed: () {
                             
                           },
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
+                            children: const[
                               Icon(Icons.check),
                               Padding(
                                 padding: EdgeInsets.all(16.0),

@@ -36,19 +36,19 @@ class _calendarpageState extends State<calendarpage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Calendario"),
-        elevation: 20,
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.add),
-            onPressed: () {
-              Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) =>
-                      AddWorkPage(dateSelected: dateSelected)));
-            },
-          ),
-        ],
+        // actions: [
+        //   IconButton(
+        //     icon: const Icon(Icons.add),
+        //     onPressed: () {
+        //       Navigator.of(context).push(MaterialPageRoute(
+        //           builder: (context) =>
+        //               AddWorkPage(dateSelected: dateSelected)));
+        //     },
+        //   ),
+        // ],
       ),
       body: SingleChildScrollView(
+        physics: const ScrollPhysics(),
         child: Padding(
           padding: const EdgeInsets.all(20),
           child: Column(
@@ -76,6 +76,7 @@ class _calendarpageState extends State<calendarpage> {
               Text("Horarios marcados em $dateSelected"),
               const Divider(),
               ListView.builder(
+                physics: const NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
                 itemCount: workTasks.length,
                 itemBuilder: (context, index) {
@@ -103,7 +104,8 @@ class _calendarpageState extends State<calendarpage> {
       floatingActionButton: FloatingActionButton.small(
         child: const Icon(Icons.add),
         onPressed: () => Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => AddWorkPage(dateSelected: dateSelected))
+                    builder: (context) => 
+                    AddWorkPage(dateSelected: dateSelected))
         ),
       ),
     );

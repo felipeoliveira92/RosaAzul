@@ -1,6 +1,8 @@
 import 'package:appsalao/pages/calculatepage.dart';
 import 'package:appsalao/pages/calendarpage.dart';
 import 'package:appsalao/pages/historic.page.dart';
+import 'package:appsalao/pages/profile.page.dart';
+import 'package:d_chart/d_chart.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
@@ -13,6 +15,12 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        elevation: 0,
+      ),
+      drawer: Drawer(
+        child: DrawerListView(context),
+      ),
       body: BuildListView(),
     );
   }
@@ -22,39 +30,91 @@ class _HomePageState extends State<HomePage> {
     return ListView(
       children: <Widget>[
         DrawerHeader(
-              // ignore: sort_child_properties_last
-              child: Row(
-                children: <Widget>[
-                  Expanded(
-                    child: ListTile(
-                      leading: Image.asset("images/logo-s-fundo.png", height: 100),
-                      title: const Text("Felipe Rabelo", style: TextStyle(color: Colors.white)),
-                      subtitle: const Text("Opções.", style: TextStyle(color: Colors.white)),
-                      
-                      onTap: () {
-                        Navigator.of(context).push(
-                        MaterialPageRoute(builder: (context) => const calendarpage()));
-                      },
-                    ),
-                  ),
+          // ignore: sort_child_properties_last
+          child: Row(
+            children: <Widget>[
+              Expanded(
+                child: ListTile(
+                  leading: Image.asset("images/logo-s-fundo.png", height: 100),
+                  title: const Text("Felipe Rabelo",
+                      style: TextStyle(color: Colors.white)),
+                  subtitle: const Text("Opções.",
+                      style: TextStyle(color: Colors.white)),
+                  onTap: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => const ProfilePage()));
+                  },
+                ),
+              ),
+              Expanded(
+                child: Image.asset("images/logo-s-fundo.png", height: 300),
+              ),
+            ],
+          ),
+          decoration: const BoxDecoration(
+            color: Colors.deepPurple,
+          ),
+        ),
+        
+        const SizedBox(
+          height: 100,
+        ),
+        AspectRatio(
+          aspectRatio: 16 / 9,
+          child: DChartPie(
+            data: const [
+              {'domain': 'Entradas', 'measure': 28},
+              {'domain': 'Saidas', 'measure': 27},
+              {'domain': 'Ionic', 'measure': 20},
+              {'domain': 'Cordova', 'measure': 15},
+            ],
+            fillColor: (pieData, index) {
+              switch (pieData['domain']) {
+                case 'Entradas':
+                  return Colors.green;
+                case 'Saidas':
+                  return Colors.red;
+                case 'Ionic':
+                  return Colors.lightBlue;
+                default:
+                  return Colors.orange;
+              }
+            },
+            pieLabel: (pieData, index) {
+              return "${pieData['domain']}:\n${pieData['measure']}%";
+            },
+            labelPosition: PieLabelPosition.outside,
+          ),
+        ),
+      ],
+    );
+  }
+}
 
-                  Expanded(
-                    child: Image.asset("images/logo-s-fundo.png", height: 300),
-                  ),
-                ],
-              ),
-              decoration: const BoxDecoration(
-                color: Colors.deepPurple,
-              ),
+// ignore: non_constant_identifier_names
+DrawerListView(BuildContext context) {
+  return ListView(
+    children: <Widget>[
+      const DrawerHeader(
+          decoration: BoxDecoration(
+            color: Colors.deepPurple,
+          ),
+          child: Text(
+            'Opções',
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 24,
+            ),
+          ),
         ),
 
-        ListTile(
+      ListTile(
           leading: const Icon(Icons.calculate_rounded),
           title: const Text("Calculadora"),
           subtitle: const Text("Calcule quanto ira gastar."),
           onTap: () {
             Navigator.of(context).push(
-            MaterialPageRoute(builder: (context) => const calculatepage()));
+                MaterialPageRoute(builder: (context) => const calculatepage()));
           },
         ),
         const Divider(),
@@ -64,20 +124,19 @@ class _HomePageState extends State<HomePage> {
           subtitle: const Text("Veja e marque horarios."),
           onTap: () {
             Navigator.of(context).push(
-            MaterialPageRoute(builder: (context) => const calendarpage()));
+                MaterialPageRoute(builder: (context) => const calendarpage()));
           },
         ),
         const Divider(),
         ListTile(
-          leading: const Icon(Icons.money),
+          leading: const Icon(Icons.attach_money),
           title: const Text("Faturamento"),
           subtitle: const Text("Veja quanto esta lucrando."),
           onTap: () {
             Navigator.of(context).push(
-            MaterialPageRoute(builder: (context) => const HistoricPage()));
+                MaterialPageRoute(builder: (context) => const HistoricPage()));
           },
         ),
-      ],
-    );
-  }
+    ],
+  );
 }

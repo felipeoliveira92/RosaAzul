@@ -1,9 +1,5 @@
-import 'package:appsalao/controllers/api.dart';
 import 'package:appsalao/models/worktask.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
-
 import '../repositories/worktask.repository.dart';
 import 'calendarpage.dart';
 
@@ -17,8 +13,9 @@ class AddWorkPage extends StatefulWidget {
 }
 
 class _AddWorkPageState extends State<AddWorkPage> {
-  WorkTask workTask = new WorkTask();
+  WorkTask workTask = WorkTask();
   final _workTaskRepository = WorkTaskRepository();
+  var time = TimeOfDay(hour: DateTime.now().hour, minute: DateTime.now().minute);
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +23,6 @@ class _AddWorkPageState extends State<AddWorkPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Adicionando Novo Horario"),
-        elevation: 20,
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -89,12 +85,30 @@ class _AddWorkPageState extends State<AddWorkPage> {
                       ),
                       TextFormField(
                         keyboardType: TextInputType.datetime,
+                        initialValue: time.toString(),
                         decoration: const InputDecoration(
                             border: OutlineInputBorder(),
                             labelText: "Horario",
                             labelStyle: TextStyle(color: Colors.black)),
                         onChanged: (text) {
                           workTask.horario = int.parse(text);
+                        },
+                      ),
+                      IconButton(
+                        icon: const Icon(Icons.access_time),
+                        onPressed: () async {
+                          final timeselected = await showTimePicker(
+                            context: context,
+                            initialTime: TimeOfDay(
+                                hour: DateTime.now().hour,
+                                minute: DateTime.now().minute),
+                          );
+
+                          if (timeselected != null) {
+                            setState(() {
+                              time = timeselected.hour as TimeOfDay;
+                            });
+                          }
                         },
                       ),
                       Container(
@@ -106,21 +120,23 @@ class _AddWorkPageState extends State<AddWorkPage> {
                             bool sucess = false;
                             _workTaskRepository.PostWorkTask(workTask)
                                 .then((response) => {
-                                  if(response.statusCode == 201)
-                                  {
-                                    Navigator.of(context).push(MaterialPageRoute(
-                                      builder: (context) => const calendarpage())
-                                    )                                  
-                                  }
-                                  else
-                                  {
-                                    // ignore: prefer_const_constructors
-                                    AlertDialog(
-                                      title: const Text('Basic dialog title'),
-                                      content: const Text('A dialog'),
-                                    )
-                                  }                                    
-                                });
+                                      if (response.statusCode == 201)
+                                        {
+                                          Navigator.of(context).push(
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      const calendarpage()))
+                                        }
+                                      else
+                                        {
+                                          // ignore: prefer_const_constructors
+                                          AlertDialog(
+                                            title: const Text(
+                                                'Basic dialog title'),
+                                            content: const Text('A dialog'),
+                                          )
+                                        }
+                                    });
                           },
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,

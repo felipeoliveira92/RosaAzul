@@ -61,6 +61,26 @@ class WorkTaskRepository {
     return workTasks;
   }
 
+  Future<List<WorkTask>> GetWorkTaskByFilter(DateTime dateInitial, DateTime dateEnd) async {
+    List<WorkTask> workTasks = [];
+    var url = '$baseUrl/';
+
+    try 
+    {
+      final response = await _dio.get(url);
+
+      if (response.statusCode == 200) {
+        final workTask = WorkTask.fromJson(response.data);
+
+        workTasks.add(workTask);
+      }
+    } catch (e) {
+      print(e.toString());
+    }
+
+    return workTasks;
+  }
+
   Future<Response> PostWorkTask(WorkTask model) async {
     final workTask = model.toJson();
 

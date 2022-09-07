@@ -16,7 +16,7 @@ class UserRepository {
   Future<User> GetUserById(int id) async {
     url += '/$id';
     final response = await _dio.get(url);
-    final user = response.data as User;
+    final user = User.fromJson(response.data);
 
     return user;
   }
