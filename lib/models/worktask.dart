@@ -4,6 +4,7 @@ class WorkTask {
   String? preco;
   String? descricao;
   String? id;
+  //colocar referencia de client
 
   WorkTask(
       {this.horario, this.nomeCliente, this.preco, this.descricao, this.id});
