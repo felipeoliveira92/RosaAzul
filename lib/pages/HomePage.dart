@@ -32,14 +32,12 @@ class _HomePageState extends State<HomePage> {
         DrawerHeader(
           // ignore: sort_child_properties_last
           child: Row(
-            children: <Widget>[
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
               Expanded(
                 child: ListTile(
-                  leading: Image.asset("images/logo-s-fundo.png", height: 100),
-                  title: const Text("Felipe Rabelo",
-                      style: TextStyle(color: Colors.white)),
-                  subtitle: const Text("Opções.",
-                      style: TextStyle(color: Colors.white)),
+                  leading: Image.asset("images/gif-logo.gif", height: 100, width: 50),
+                  title: const Text("Felipe Rabelo", style: TextStyle(color: Colors.white)),
                   onTap: () {
                     Navigator.of(context).push(MaterialPageRoute(
                         builder: (context) => const ProfilePage()));
@@ -47,7 +45,7 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
               Expanded(
-                child: Image.asset("images/logo-s-fundo.png", height: 300),
+                child: Image.asset("images/logo-header.png", height: 300,alignment: Alignment.centerRight)
               ),
             ],
           ),

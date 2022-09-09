@@ -15,14 +15,17 @@ class AddWorkPage extends StatefulWidget {
 class _AddWorkPageState extends State<AddWorkPage> {
   WorkTask workTask = WorkTask();
   final _workTaskRepository = WorkTaskRepository();
-  var time = TimeOfDay(hour: DateTime.now().hour, minute: DateTime.now().minute);
+  var timeSelected = TimeOfDay.now();
 
+_AddWorkPageState(){
+  //workTask.id = DateTime.now().day.toString();
+}
   @override
   Widget build(BuildContext context) {
-    workTask.id = "22";
+    
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Adicionando Novo Horario"),
+        title: const Text("Adicionando Novo Serviço"),
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -83,33 +86,44 @@ class _AddWorkPageState extends State<AddWorkPage> {
                         width: 20,
                         height: 20,
                       ),
-                      TextFormField(
-                        keyboardType: TextInputType.datetime,
-                        initialValue: time.toString(),
-                        decoration: const InputDecoration(
-                            border: OutlineInputBorder(),
-                            labelText: "Horario",
-                            labelStyle: TextStyle(color: Colors.black)),
-                        onChanged: (text) {
-                          workTask.horario = int.parse(text);
-                        },
-                      ),
-                      IconButton(
-                        icon: const Icon(Icons.access_time),
-                        onPressed: () async {
-                          final timeselected = await showTimePicker(
-                            context: context,
-                            initialTime: TimeOfDay(
-                                hour: DateTime.now().hour,
-                                minute: DateTime.now().minute),
-                          );
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(16.0),
+                            child: timeSelected == TimeOfDay.now()
+                                ? const Text("Selecione um horario:",
+                                    style: TextStyle(fontSize: 16))
+                                : Text(
+                                    "Horario selecionado: ${timeSelected.hour}:${timeSelected.minute}",
+                                    style: TextStyle(fontSize: 20)),
+                          ),
+                          IconButton(
+                            alignment: Alignment.centerRight,
+                            icon: const Icon(Icons.access_time),
+                            onPressed: () async {
+                              final time = await showTimePicker(
+                                context: context,
+                                builder: (context, child) => MediaQuery(
+                                    data: MediaQuery.of(context)
+                                        .copyWith(alwaysUse24HourFormat: true),
+                                    child: child ?? Container()),
+                                initialTime: TimeOfDay(
+                                    hour: DateTime.now().hour,
+                                    minute: DateTime.now().minute),
+                              );
 
-                          if (timeselected != null) {
-                            setState(() {
-                              time = timeselected.hour as TimeOfDay;
-                            });
-                          }
-                        },
+                              if (time != null) {
+                                setState(() {
+                                  timeSelected = TimeOfDay(
+                                      hour: time.hour,
+                                      minute: time.minute);
+                                  workTask.horario = timeSelected.hour;
+                                });
+                              }
+                            },
+                          ),
+                        ],
                       ),
                       Container(
                         alignment: Alignment.bottomCenter,
@@ -141,7 +155,7 @@ class _AddWorkPageState extends State<AddWorkPage> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: const [
-                              Icon(Icons.check),
+                              Icon(Icons.save),
                               Padding(
                                 padding: EdgeInsets.all(16.0),
                                 child: Text('Salvar',
