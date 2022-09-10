@@ -1,7 +1,7 @@
 import 'package:appsalao/pages/calculatepage.dart';
-import 'package:appsalao/pages/calendarpage.dart';
-import 'package:appsalao/pages/historic.page.dart';
-import 'package:appsalao/pages/profile.page.dart';
+import 'package:appsalao/pages/Service/calendarpage.dart';
+import 'package:appsalao/pages/Service/historic.page.dart';
+import 'package:appsalao/pages/User/profile.page.dart';
 import 'package:d_chart/d_chart.dart';
 import 'package:flutter/material.dart';
 

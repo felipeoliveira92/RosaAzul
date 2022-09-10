@@ -1,38 +1,31 @@
 import 'package:appsalao/models/worktask.dart';
+import 'package:appsalao/pages/Service/calendarpage.dart';
+import 'package:appsalao/repositories/worktask.repository.dart';
 import 'package:flutter/material.dart';
-import '../repositories/worktask.repository.dart';
-import 'calendarpage.dart';
 
-class AddWorkPage extends StatefulWidget {
-  String dateSelected;
+class AlterWorkPage extends StatefulWidget {
+  WorkTask workTask;
 
-  AddWorkPage({Key? key, required this.dateSelected}) : super(key: key);
+  AlterWorkPage({Key? key, required this.workTask}) : super(key: key);
 
   @override
-  State<AddWorkPage> createState() => _AddWorkPageState();
+  State<AlterWorkPage> createState() => _AlterWorkPageState();
 }
 
-class _AddWorkPageState extends State<AddWorkPage> {
-  WorkTask workTask = WorkTask();
+class _AlterWorkPageState extends State<AlterWorkPage> {
   final _workTaskRepository = WorkTaskRepository();
   var timeSelected = TimeOfDay.now();
-
-_AddWorkPageState(){
-  //workTask.id = DateTime.now().day.toString();
-}
   @override
   Widget build(BuildContext context) {
-    
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Adicionando Novo Serviço"),
+        title: const Text("Alterando Serviço"),
       ),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(10),
           child: Column(
             children: [
-              Text("Data Selecionada: ${widget.dateSelected}"),
               Padding(
                 padding: const EdgeInsets.all(10),
                 child: Center(
@@ -45,13 +38,15 @@ _AddWorkPageState(){
                         height: 20,
                       ),
                       TextFormField(
+                        initialValue: widget.workTask.nomeCliente == null ? "" : widget.workTask.nomeCliente,
                         keyboardType: TextInputType.text,
                         decoration: const InputDecoration(
                             border: OutlineInputBorder(),
                             labelText: "Cliente",
-                            labelStyle: TextStyle(color: Colors.black)),
+                            labelStyle: TextStyle(color: Colors.black)
+                        ),
                         onChanged: (text) {
-                          workTask.nomeCliente = text;
+                          widget.workTask.nomeCliente = text;
                         },
                       ),
                       const SizedBox(
@@ -59,13 +54,15 @@ _AddWorkPageState(){
                         height: 20,
                       ),
                       TextFormField(
+                        initialValue: widget.workTask.descricao == null ? "" : widget.workTask.descricao,
                         keyboardType: TextInputType.text,
                         decoration: const InputDecoration(
                             border: OutlineInputBorder(),
                             labelText: "Trabalho",
-                            labelStyle: TextStyle(color: Colors.black)),
+                            labelStyle: TextStyle(color: Colors.black)
+                        ),
                         onChanged: (text) {
-                          workTask.descricao = text;
+                          widget.workTask.descricao = text;
                         },
                       ),
                       const SizedBox(
@@ -73,30 +70,30 @@ _AddWorkPageState(){
                         height: 20,
                       ),
                       TextFormField(
+                        initialValue: widget.workTask.preco == null ? "" : widget.workTask.preco,
                         keyboardType: TextInputType.number,
                         decoration: const InputDecoration(
                             border: OutlineInputBorder(),
                             labelText: "Preço",
-                            labelStyle: TextStyle(color: Colors.black)),
+                            labelStyle: TextStyle(color: Colors.black)
+                        ),
                         onChanged: (text) {
-                          workTask.preco = text;
+                          widget.workTask..preco = text;
                         },
                       ),
                       const SizedBox(
                         width: 20,
                         height: 20,
                       ),
+
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Padding(
                             padding: const EdgeInsets.all(16.0),
-                            child: timeSelected == TimeOfDay.now()
-                                ? const Text("Selecione um horario:",
-                                    style: TextStyle(fontSize: 16))
-                                : Text(
-                                    "Horario selecionado: ${timeSelected.hour}:${timeSelected.minute}",
-                                    style: TextStyle(fontSize: 20)),
+                            child: widget.workTask.horario == null 
+                                ? const Text("Selecione um horario: ", style: TextStyle(fontSize: 20))
+                                : Text("Horario selecionado: ${widget.workTask.horario}", style: const TextStyle(fontSize: 20))
                           ),
                           IconButton(
                             alignment: Alignment.centerRight,
@@ -118,23 +115,23 @@ _AddWorkPageState(){
                                   timeSelected = TimeOfDay(
                                       hour: time.hour,
                                       minute: time.minute);
-                                  workTask.horario = timeSelected.hour;
+                                  widget.workTask.horario = timeSelected.hour;
                                 });
                               }
                             },
                           ),
                         ],
                       ),
+
                       Container(
                         alignment: Alignment.bottomCenter,
                         margin: const EdgeInsets.all(24.0),
                         child: ElevatedButton(
                           onPressed: () {
-                            // var sucess = API.postNewWorkTask(workTask);
                             bool sucess = false;
-                            _workTaskRepository.PostWorkTask(workTask)
+                            _workTaskRepository.UpdateWorkTask(widget.workTask)
                                 .then((response) => {
-                                      if (response.statusCode == 201)
+                                      if (response.statusCode == 200)
                                         {
                                           Navigator.of(context).push(
                                               MaterialPageRoute(
@@ -154,12 +151,11 @@ _AddWorkPageState(){
                           },
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
-                            children: const [
-                              Icon(Icons.save),
+                            children: const[
+                              Icon(Icons.edit),
                               Padding(
                                 padding: EdgeInsets.all(16.0),
-                                child: Text('Salvar',
-                                    style: TextStyle(fontSize: 20)),
+                                child: Text('Alterar', style: TextStyle(fontSize: 20)),
                               )
                             ],
                           ),

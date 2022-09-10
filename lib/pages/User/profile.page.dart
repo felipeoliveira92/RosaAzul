@@ -1,6 +1,6 @@
 import 'package:appsalao/models/user.dart';
 import 'package:appsalao/pages/Generic/alterfields.page.dart';
-import 'package:appsalao/pages/login.page.dart';
+import 'package:appsalao/pages/User/login.page.dart';
 import 'package:appsalao/repositories/user.repository.dart';
 import 'package:flutter/material.dart';
 
