@@ -21,6 +21,15 @@ class ClientRepository {
     return client;
   }
 
+  Future<Client> GetClientByName(String name) async {
+    url += '/$name';
+    final response = await _dio.get(url);
+    final client = Client.fromJson(response.data);
+
+    return client;
+    //arrumar
+  }
+
   Future<Response> PostClient(Client model) async {
     final user = model.toJson();
 

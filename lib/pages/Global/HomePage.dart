@@ -1,3 +1,4 @@
+import 'package:appsalao/pages/Client/Client.page.dart';
 import 'package:appsalao/pages/calculatepage.dart';
 import 'package:appsalao/pages/Service/calendarpage.dart';
 import 'package:appsalao/pages/Service/historic.page.dart';
@@ -94,47 +95,63 @@ DrawerListView(BuildContext context) {
   return ListView(
     children: <Widget>[
       const DrawerHeader(
-          decoration: BoxDecoration(
-            color: Colors.deepPurple,
-          ),
-          child: Text(
-            'Opções',
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 24,
-            ),
+        decoration: BoxDecoration(
+          color: Colors.deepPurple,
+        ),
+        child: Text(
+          'Opções',
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 24,
           ),
         ),
+      ),
 
       ListTile(
-          leading: const Icon(Icons.calculate_rounded),
-          title: const Text("Calculadora"),
-          subtitle: const Text("Calcule quanto ira gastar."),
+          leading: const Icon(Icons.groups),
+          title: const Text("Clientes"),
+          subtitle: const Text("Gerencie clientes."),
           onTap: () {
             Navigator.of(context).push(
-                MaterialPageRoute(builder: (context) => const calculatepage()));
+                MaterialPageRoute(builder: (context) => const ClientPage()));
           },
-        ),
-        const Divider(),
-        ListTile(
-          leading: const Icon(Icons.calendar_month),
-          title: const Text("Calendario"),
-          subtitle: const Text("Veja e marque horarios."),
-          onTap: () {
-            Navigator.of(context).push(
-                MaterialPageRoute(builder: (context) => const calendarpage()));
-          },
-        ),
-        const Divider(),
-        ListTile(
-          leading: const Icon(Icons.attach_money),
-          title: const Text("Faturamento"),
-          subtitle: const Text("Veja quanto esta lucrando."),
-          onTap: () {
-            Navigator.of(context).push(
-                MaterialPageRoute(builder: (context) => const HistoricPage()));
-          },
-        ),
+      ),
+
+      const Divider(),
+
+      ListTile(
+        leading: const Icon(Icons.calculate_rounded),
+        title: const Text("Calculadora"),
+        subtitle: const Text("Calcule quanto ira gastar."),
+        onTap: () {
+          Navigator.of(context).push(
+              MaterialPageRoute(builder: (context) => const calculatepage()));
+        },
+      ),
+
+      const Divider(),
+
+      ListTile(
+        leading: const Icon(Icons.calendar_month),
+        title: const Text("Calendario"),
+        subtitle: const Text("Veja e marque horarios."),
+        onTap: () {
+          Navigator.of(context).push(
+              MaterialPageRoute(builder: (context) => const calendarpage()));
+        },
+      ),
+
+      const Divider(),
+
+      ListTile(
+        leading: const Icon(Icons.attach_money),
+        title: const Text("Faturamento"),
+        subtitle: const Text("Veja quanto esta lucrando."),
+        onTap: () {
+          Navigator.of(context).push(
+              MaterialPageRoute(builder: (context) => const HistoricPage()));
+        },
+      ),
     ],
   );
 }
