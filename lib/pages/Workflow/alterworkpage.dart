@@ -1,7 +1,8 @@
 import 'package:appsalao/models/worktask.dart';
-import 'package:appsalao/pages/Service/calendarpage.dart';
 import 'package:appsalao/repositories/worktask.repository.dart';
 import 'package:flutter/material.dart';
+
+import 'calendarpage.dart';
 
 class AlterWorkPage extends StatefulWidget {
   WorkTask workTask;
@@ -78,7 +79,7 @@ class _AlterWorkPageState extends State<AlterWorkPage> {
                             labelStyle: TextStyle(color: Colors.black)
                         ),
                         onChanged: (text) {
-                          widget.workTask..preco = text;
+                          widget.workTask.preco = text;
                         },
                       ),
                       const SizedBox(
@@ -133,10 +134,8 @@ class _AlterWorkPageState extends State<AlterWorkPage> {
                                 .then((response) => {
                                       if (response.statusCode == 200)
                                         {
-                                          Navigator.of(context).push(
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      const calendarpage()))
+                                          Navigator.of(context).pushReplacement(
+                                              MaterialPageRoute(builder: (context) => const calendarpage()))
                                         }
                                       else
                                         {

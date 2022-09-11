@@ -1,6 +1,8 @@
+// ignore_for_file: camel_case_types
+
 import 'package:appsalao/models/user.dart';
 import 'package:appsalao/models/worktask.dart';
-import 'package:appsalao/pages/Service/addworkpage.dart';
+import 'package:appsalao/pages/Workflow/addworkpage.dart';
 import 'package:flutter/material.dart';
 import '../../repositories/worktask.repository.dart';
 import 'alterworkpage.dart';

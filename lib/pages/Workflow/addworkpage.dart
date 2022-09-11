@@ -96,7 +96,7 @@ _AddWorkPageState(){
                                     style: TextStyle(fontSize: 16))
                                 : Text(
                                     "Horario selecionado: ${timeSelected.hour}:${timeSelected.minute}",
-                                    style: TextStyle(fontSize: 20)),
+                                    style: const TextStyle(fontSize: 20)),
                           ),
                           IconButton(
                             alignment: Alignment.centerRight,
@@ -134,21 +134,22 @@ _AddWorkPageState(){
                             _workTaskRepository.PostWorkTask(workTask)
                                 .then((response) => {
                                       if (response.statusCode == 201)
-                                        {
-                                          Navigator.of(context).push(
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      const calendarpage()))
-                                        }
+                                      {
+                                        Navigator.of(context).pushReplacement(
+                                            MaterialPageRoute(
+                                                builder: (context) => const calendarpage()
+                                            )
+                                        )
+                                      }
                                       else
-                                        {
-                                          // ignore: prefer_const_constructors
-                                          AlertDialog(
-                                            title: const Text(
-                                                'Basic dialog title'),
-                                            content: const Text('A dialog'),
-                                          )
-                                        }
+                                      {
+                                        // ignore: prefer_const_constructors
+                                        AlertDialog(
+                                          title: const Text(
+                                              'Basic dialog title'),
+                                          content: const Text('A dialog'),
+                                        )
+                                      }
                                     });
                           },
                           child: Row(

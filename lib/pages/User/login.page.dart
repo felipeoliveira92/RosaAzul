@@ -44,8 +44,7 @@ class _LoginPageState extends State<LoginPage> {
                   height: 60.0,
                   child: RaisedButton.icon(
                     onPressed: () {
-                      Navigator.of(context).push(
-                          MaterialPageRoute(builder: (context) => HomePage()));
+                      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => HomePage()));
                     },
                     color: Colors.white,
                     label: Text("ENTRAR"),                                        
