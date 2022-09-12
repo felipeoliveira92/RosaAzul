@@ -43,10 +43,10 @@ class _ActionsClientState extends State<ActionsClient> {
               children: [
                 TextFormField(
                   keyboardType: TextInputType.text,
-                  decoration: const InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: "Nome",
-                      labelStyle: TextStyle(color: Colors.black)),
+                  decoration: InputDecoration(
+                      border: const OutlineInputBorder(),
+                      labelText: widget.client.name ?? "Nome",
+                      labelStyle: const TextStyle(color: Colors.black)),
                   onChanged: (text) {
                     //workTask.descricao = text;
                   },
@@ -57,10 +57,10 @@ class _ActionsClientState extends State<ActionsClient> {
                 ),
                 TextFormField(
                   keyboardType: TextInputType.phone,
-                  decoration: const InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: "Telefone",
-                      labelStyle: TextStyle(color: Colors.black)),
+                  decoration: InputDecoration(
+                      border: const OutlineInputBorder(),
+                      labelText: widget.client.cellphone ?? "Telefone",
+                      labelStyle: const TextStyle(color: Colors.black)),
                   onChanged: (text) {
                     //workTask.preco = text;
                   },
@@ -75,6 +75,13 @@ class _ActionsClientState extends State<ActionsClient> {
                   alignment: Alignment.bottomCenter,
                   margin: const EdgeInsets.all(24),
                   child: ElevatedButton(
+                    style: ButtonStyle(
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30)
+                        )
+                      )
+                    ),
                     onPressed: () {
                       bool sucess = false;
                       if (widget.action == "Create") 

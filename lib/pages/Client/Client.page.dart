@@ -101,7 +101,7 @@ class _ClientPageState extends State<ClientPage> {
                     ],
                   ),
                   onTap: () {
-                    Client clientSelected = clients[index];
+                    Client clientSelected = resultFilterClient[index];
                     Navigator.of(context).push(MaterialPageRoute(
                         builder: (context) => ActionsClient(
                             action: "Edit", client: clientSelected)));
