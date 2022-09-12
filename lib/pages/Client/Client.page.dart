@@ -14,12 +14,13 @@ class _ClientPageState extends State<ClientPage> {
   List<Client> clients = [];
   final _clientRepository = ClientRepository();
   var aux;
+  List<Client> resultFilterClient = [];
 
   _ClientPageState() {
     _clientRepository.GetAll().then((result) {
       setState(() {
         clients = result;
-        aux = clients;
+        resultFilterClient = clients;
       });
     });
   }
@@ -39,33 +40,33 @@ class _ClientPageState extends State<ClientPage> {
               padding: const EdgeInsets.all(20),
               child: TextFormField(
                 keyboardType: TextInputType.text,
-                decoration: const InputDecoration(
-                    border: OutlineInputBorder(),
+                decoration: InputDecoration(
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(30),
+                    ),
                     labelText: "Busca",
-                    labelStyle: TextStyle(color: Colors.black)),
+                    labelStyle: const TextStyle(color: Colors.black)),
                 onChanged: (text) {
                   //faço o filtro pelo campo nome cliente
                   if (text != "") {
-                    var client = clients.first;
-                    if (client.id != null) {
+                    aux = clients
+                        .where((element) => element.name!.contains(text)).toList();
+                    if (aux.isNotEmpty) {
                       setState(() {
-                        aux = clients;
-                        clients = [];
-                        clients.add(client);
+                        resultFilterClient = [];
+                        resultFilterClient = aux;
+                      });
+                    }
+                    else{
+                      setState(() {
+                        resultFilterClient = [];
                       });
                     }
                   } else {
                     setState(() {
-                      clients = aux;
+                      resultFilterClient = clients;
                     });
                   }
-
-                  // _clientRepository.GetClientByName(text).then((result) {
-                  //   setState(() {
-                  //     clients = [];
-                  //     clients.add(result);
-                  //   });
-                  // });
                 },
               ),
             ),
@@ -76,24 +77,24 @@ class _ClientPageState extends State<ClientPage> {
             ListView.builder(
               physics: const NeverScrollableScrollPhysics(),
               shrinkWrap: true,
-              itemCount: clients.length,
+              itemCount: resultFilterClient.length,
               itemBuilder: (context, index) {
                 return ListTile(
                   leading: const Icon(Icons.account_circle),
-                  title: Text(clients[index].name.toString()),
-                  subtitle: Text(clients[index].cellphone.toString()),
+                  title: Text(resultFilterClient[index].name.toString()),
+                  subtitle: Text(resultFilterClient[index].cellphone.toString()),
                   trailing: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       IconButton(
                         icon: const Icon(Icons.call),
-                        tooltip: "Ligar para ${clients[index].name}",
+                        tooltip: "Ligar para ${resultFilterClient[index].name}",
                         onPressed: () {},
                       ),
                       IconButton(
                         icon: const Icon(Icons.whatsapp),
                         tooltip:
-                            "Mandar um whatsapp para ${clients[index].name}",
+                            "Mandar um whatsapp para ${resultFilterClient[index].name}",
                         onPressed: () {},
                       ),
                       const Icon(Icons.navigate_next)

@@ -1,3 +1,5 @@
+// ignore_for_file: non_constant_identifier_names
+
 import 'package:appsalao/models/user.dart';
 import 'package:dio/dio.dart';
 
@@ -55,9 +57,9 @@ class UserRepository {
   }
 
   Future<bool> Login(String username, String password) async {
-    var user = GetUserByLogin(username);
+    //var user = GetUserByLogin(username);
 
-    if (user != null) return true;
+    //if (user != null) return true;
 
     return false;
   }

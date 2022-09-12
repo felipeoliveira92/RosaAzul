@@ -1,3 +1,5 @@
+// ignore_for_file: non_constant_identifier_names
+
 import 'package:appsalao/models/user.dart';
 import 'package:appsalao/pages/Generic/alterfields.page.dart';
 import 'package:appsalao/pages/User/login.page.dart';

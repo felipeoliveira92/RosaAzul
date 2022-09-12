@@ -1,4 +1,5 @@
 import 'package:appsalao/pages/Client/Client.page.dart';
+import 'package:appsalao/pages/Services/Service.page.dart';
 import 'package:appsalao/pages/Workflow/calendarpage.dart';
 import 'package:appsalao/pages/Workflow/historic.page.dart';
 import 'package:appsalao/pages/calculatepage.dart';
@@ -58,14 +59,15 @@ class _HomePageState extends State<HomePage> {
         const SizedBox(
           height: 100,
         ),
+        const Center(child: Text("Estatisticas")),
         AspectRatio(
           aspectRatio: 16 / 9,
           child: DChartPie(
             data: const [
-              {'domain': 'Entradas', 'measure': 28},
+              {'domain': 'Entradas', 'measure': 73},
               {'domain': 'Saidas', 'measure': 27},
-              {'domain': 'Ionic', 'measure': 20},
-              {'domain': 'Cordova', 'measure': 15},
+              // {'domain': 'Ionic', 'measure': 20},
+              // {'domain': 'Cordova', 'measure': 15},
             ],
             fillColor: (pieData, index) {
               switch (pieData['domain']) {
@@ -120,12 +122,12 @@ DrawerListView(BuildContext context) {
       const Divider(),
 
       ListTile(
-        leading: const Icon(Icons.calculate_rounded),
-        title: const Text("Calculadora"),
-        subtitle: const Text("Calcule quanto ira gastar."),
+        leading: const Icon(Icons.build),
+        title: const Text("Serviços"),
+        subtitle: const Text("Gerencie seus serviços."),
         onTap: () {
           Navigator.of(context).push(
-              MaterialPageRoute(builder: (context) => const calculatepage()));
+              MaterialPageRoute(builder: (context) => const ServicePage()));
         },
       ),
 
@@ -138,6 +140,18 @@ DrawerListView(BuildContext context) {
         onTap: () {
           Navigator.of(context).push(
               MaterialPageRoute(builder: (context) => const calendarpage()));
+        },
+      ),
+
+      const Divider(),
+
+      ListTile(
+        leading: const Icon(Icons.calculate_rounded),
+        title: const Text("Calculadora"),
+        subtitle: const Text("Calcule quanto ira gastar."),
+        onTap: () {
+          Navigator.of(context).push(
+              MaterialPageRoute(builder: (context) => const calculatepage()));
         },
       ),
 

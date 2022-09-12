@@ -1,3 +1,5 @@
+// ignore_for_file: non_constant_identifier_names
+
 import 'package:appsalao/models/worktask.dart';
 import 'package:dio/dio.dart';
 
@@ -8,8 +10,7 @@ class WorkTaskRepository {
   Future<List<WorkTask>> GetAll() async {
     List<WorkTask> listWorks = [];
 
-    try 
-    {
+    try {
       final response = await _dio.get(baseUrl);
 
       if (response.statusCode == 200) {
@@ -17,7 +18,7 @@ class WorkTaskRepository {
         listWorks = body.map((u) => WorkTask.fromJson(u)).toList();
       }
     } catch (e) {
-      print(e.toString());
+      throw e.toString();
     }
 
     return listWorks;
@@ -26,8 +27,7 @@ class WorkTaskRepository {
   Future<List<WorkTask>> GetAllByDate(int date) async {
     List<WorkTask> listWorks = [];
 
-    try 
-    {
+    try {
       final response = await _dio.get(baseUrl);
 
       if (response.statusCode == 200) {
@@ -35,8 +35,8 @@ class WorkTaskRepository {
         listWorks = body.map((u) => WorkTask.fromJson(u)).toList();
       }
     } catch (e) {
-      print(e.toString());
-    }    
+      throw e.toString();
+    }
 
     return listWorks;
   }
@@ -45,8 +45,7 @@ class WorkTaskRepository {
     List<WorkTask> workTasks = [];
     var url = '$baseUrl/$id';
 
-    try 
-    {
+    try {
       final response = await _dio.get(url);
 
       if (response.statusCode == 200) {
@@ -55,18 +54,18 @@ class WorkTaskRepository {
         workTasks.add(workTask);
       }
     } catch (e) {
-      print(e.toString());
+      throw e.toString();
     }
 
     return workTasks;
   }
 
-  Future<List<WorkTask>> GetWorkTaskByFilter(DateTime dateInitial, DateTime dateEnd) async {
+  Future<List<WorkTask>> GetWorkTaskByFilter(
+      DateTime dateInitial, DateTime dateEnd) async {
     List<WorkTask> workTasks = [];
     var url = '$baseUrl/';
 
-    try 
-    {
+    try {
       final response = await _dio.get(url);
 
       if (response.statusCode == 200) {
@@ -75,7 +74,7 @@ class WorkTaskRepository {
         workTasks.add(workTask);
       }
     } catch (e) {
-      print(e.toString());
+      throw e.toString();
     }
 
     return workTasks;

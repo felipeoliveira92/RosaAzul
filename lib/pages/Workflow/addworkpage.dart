@@ -1,5 +1,8 @@
+import 'package:appsalao/models/client.dart';
 import 'package:appsalao/models/worktask.dart';
+import 'package:appsalao/repositories/client.repository.dart';
 import 'package:flutter/material.dart';
+import 'package:searchfield/searchfield.dart';
 import '../../repositories/worktask.repository.dart';
 import 'calendarpage.dart';
 
@@ -15,14 +18,21 @@ class AddWorkPage extends StatefulWidget {
 class _AddWorkPageState extends State<AddWorkPage> {
   WorkTask workTask = WorkTask();
   final _workTaskRepository = WorkTaskRepository();
+  final _clientsRepository = ClientRepository();
+  List<Client> clients = [];
+  List<String> autoCompleteclients = [];
   var timeSelected = TimeOfDay.now();
 
-_AddWorkPageState(){
-  //workTask.id = DateTime.now().day.toString();
-}
   @override
   Widget build(BuildContext context) {
-    
+    _clientsRepository.GetAll().then((value) {
+      setState(() {
+        value.forEach((element) => { 
+          autoCompleteclients.add(element.name.toString())
+        });
+      });
+      },
+    );
     return Scaffold(
       appBar: AppBar(
         title: const Text("Adicionando Novo Serviço"),
@@ -40,6 +50,26 @@ _AddWorkPageState(){
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
+                      const SizedBox(
+                        width: 20,
+                        height: 20,
+                      ),
+                      SearchField(
+                        hint: "Search",
+                        searchInputDecoration: InputDecoration(
+                          labelText: "Selecione um Cliente",
+                          labelStyle: const TextStyle(color: Colors.black),
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: const BorderSide(
+                                color: Colors.deepPurple, width: 1),
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                        ),
+                        suggestions: autoCompleteclients
+                            .map((e) => SearchFieldListItem(e, child: Text(e)))
+                            .toList(),
+                        
+                      ),
                       const SizedBox(
                         width: 20,
                         height: 20,
@@ -116,8 +146,7 @@ _AddWorkPageState(){
                               if (time != null) {
                                 setState(() {
                                   timeSelected = TimeOfDay(
-                                      hour: time.hour,
-                                      minute: time.minute);
+                                      hour: time.hour, minute: time.minute);
                                   workTask.horario = timeSelected.hour;
                                 });
                               }
@@ -134,22 +163,21 @@ _AddWorkPageState(){
                             _workTaskRepository.PostWorkTask(workTask)
                                 .then((response) => {
                                       if (response.statusCode == 201)
-                                      {
-                                        Navigator.of(context).pushReplacement(
-                                            MaterialPageRoute(
-                                                builder: (context) => const calendarpage()
-                                            )
-                                        )
-                                      }
+                                        {
+                                          Navigator.of(context).pushReplacement(
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      const calendarpage()))
+                                        }
                                       else
-                                      {
-                                        // ignore: prefer_const_constructors
-                                        AlertDialog(
-                                          title: const Text(
-                                              'Basic dialog title'),
-                                          content: const Text('A dialog'),
-                                        )
-                                      }
+                                        {
+                                          // ignore: prefer_const_constructors
+                                          AlertDialog(
+                                            title: const Text(
+                                                'Basic dialog title'),
+                                            content: const Text('A dialog'),
+                                          )
+                                        }
                                     });
                           },
                           child: Row(
