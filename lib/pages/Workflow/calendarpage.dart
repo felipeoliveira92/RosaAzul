@@ -91,7 +91,7 @@ class _calendarpageState extends State<calendarpage> {
                       trailing: Text(workTasks[index].horario.toString()),
                       onTap: () {
                         WorkTask taskSelected = workTasks[index];
-                        Navigator.of(context).push(MaterialPageRoute(
+                        Navigator.of(context).pushReplacement(MaterialPageRoute(
                             builder: (context) =>
                                 AlterWorkPage(workTask: taskSelected)));
                       },
@@ -105,7 +105,7 @@ class _calendarpageState extends State<calendarpage> {
       ),
       floatingActionButton: FloatingActionButton.small(
         child: const Icon(Icons.add),
-        onPressed: () => Navigator.of(context).push(MaterialPageRoute(
+        onPressed: () => Navigator.of(context).pushReplacement(MaterialPageRoute(
                     builder: (context) => 
                     AddWorkPage(dateSelected: dateSelected))
         ),

@@ -1,4 +1,4 @@
-// ignore_for_file: non_constant_identifier_names
+// ignore_for_file: non_constant_identifier_names, avoid_print
 
 import 'package:appsalao/models/client.dart';
 import 'package:dio/dio.dart';
@@ -8,11 +8,19 @@ class ClientRepository {
   final _dio = Dio();
 
   Future<List<Client>> GetAll() async {
-    final response = await _dio.get(url);
-    final body = response.data as List;
-    final clients = body.map((u) => Client.fromJson(u)).toList();
+    List<Client> clients = [];
 
-    return clients;
+    try {
+      final response = await _dio.get(url);
+      final body = response.data as List;
+      clients = body.map((u) => Client.fromJson(u)).toList();
+
+      return clients;
+    } 
+    catch (e) {
+      print(e);
+      return clients;
+    }
   }
 
   Future<Client> GetClientById(int id) async {

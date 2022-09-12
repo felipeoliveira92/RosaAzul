@@ -30,6 +30,7 @@ class _AddWorkPageState extends State<AddWorkPage> {
         value.forEach((element) => { 
           autoCompleteclients.add(element.name.toString())
         });
+        workTask.horario = timeSelected.hour;
       });
       },
     );
@@ -57,7 +58,7 @@ class _AddWorkPageState extends State<AddWorkPage> {
                       SearchField(
                         hint: "Search",
                         searchInputDecoration: InputDecoration(
-                          labelText: "Selecione um Cliente",
+                          labelText: "Cliente",
                           labelStyle: const TextStyle(color: Colors.black),
                           enabledBorder: OutlineInputBorder(
                             borderSide: const BorderSide(
@@ -65,10 +66,10 @@ class _AddWorkPageState extends State<AddWorkPage> {
                             borderRadius: BorderRadius.circular(10),
                           ),
                         ),
-                        suggestions: autoCompleteclients
-                            .map((e) => SearchFieldListItem(e, child: Text(e)))
-                            .toList(),
-                        
+                        suggestions: autoCompleteclients.map((e) => SearchFieldListItem(e, child: Text(e))).toList(),
+                        onSuggestionTap: (text){
+                          workTask.nomeCliente = text.searchKey;                        
+                        }, 
                       ),
                       const SizedBox(
                         width: 20,
@@ -76,24 +77,10 @@ class _AddWorkPageState extends State<AddWorkPage> {
                       ),
                       TextFormField(
                         keyboardType: TextInputType.text,
-                        decoration: const InputDecoration(
-                            border: OutlineInputBorder(),
-                            labelText: "Cliente",
-                            labelStyle: TextStyle(color: Colors.black)),
-                        onChanged: (text) {
-                          workTask.nomeCliente = text;
-                        },
-                      ),
-                      const SizedBox(
-                        width: 20,
-                        height: 20,
-                      ),
-                      TextFormField(
-                        keyboardType: TextInputType.text,
-                        decoration: const InputDecoration(
-                            border: OutlineInputBorder(),
+                        decoration: InputDecoration(
+                            border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
                             labelText: "Trabalho",
-                            labelStyle: TextStyle(color: Colors.black)),
+                            labelStyle: const TextStyle(color: Colors.black)),
                         onChanged: (text) {
                           workTask.descricao = text;
                         },
@@ -104,10 +91,10 @@ class _AddWorkPageState extends State<AddWorkPage> {
                       ),
                       TextFormField(
                         keyboardType: TextInputType.number,
-                        decoration: const InputDecoration(
-                            border: OutlineInputBorder(),
+                        decoration: InputDecoration(
+                            border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
                             labelText: "Preço",
-                            labelStyle: TextStyle(color: Colors.black)),
+                            labelStyle: const TextStyle(color: Colors.black)),
                         onChanged: (text) {
                           workTask.preco = text;
                         },
@@ -158,6 +145,13 @@ class _AddWorkPageState extends State<AddWorkPage> {
                         alignment: Alignment.bottomCenter,
                         margin: const EdgeInsets.all(24.0),
                         child: ElevatedButton(
+                          style: ButtonStyle(
+                            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                              RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(30)
+                              )
+                            )
+                          ),
                           onPressed: () {
                             bool sucess = false;
                             _workTaskRepository.PostWorkTask(workTask)

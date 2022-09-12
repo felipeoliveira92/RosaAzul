@@ -72,9 +72,9 @@ class _HomePageState extends State<HomePage> {
             fillColor: (pieData, index) {
               switch (pieData['domain']) {
                 case 'Entradas':
-                  return Colors.green;
+                  return Colors.purple;
                 case 'Saidas':
-                  return Colors.red;
+                  return Colors.deepPurple;
                 case 'Ionic':
                   return Colors.lightBlue;
                 default:

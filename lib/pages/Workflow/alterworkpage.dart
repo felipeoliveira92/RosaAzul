@@ -128,8 +128,14 @@ class _AlterWorkPageState extends State<AlterWorkPage> {
                         alignment: Alignment.bottomCenter,
                         margin: const EdgeInsets.all(24.0),
                         child: ElevatedButton(
+                          style: ButtonStyle(
+                            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                              RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(30)
+                              )
+                            )
+                          ),
                           onPressed: () {
-                            bool sucess = false;
                             _workTaskRepository.UpdateWorkTask(widget.workTask)
                                 .then((response) => {
                                       if (response.statusCode == 200)

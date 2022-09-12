@@ -1,4 +1,4 @@
-// ignore_for_file: non_constant_identifier_names
+// ignore_for_file: non_constant_identifier_names, avoid_print
 
 import 'package:appsalao/models/worktask.dart';
 import 'package:dio/dio.dart';
@@ -18,7 +18,7 @@ class WorkTaskRepository {
         listWorks = body.map((u) => WorkTask.fromJson(u)).toList();
       }
     } catch (e) {
-      throw e.toString();
+      print(e);
     }
 
     return listWorks;
@@ -35,7 +35,7 @@ class WorkTaskRepository {
         listWorks = body.map((u) => WorkTask.fromJson(u)).toList();
       }
     } catch (e) {
-      throw e.toString();
+      print(e);
     }
 
     return listWorks;
@@ -54,7 +54,7 @@ class WorkTaskRepository {
         workTasks.add(workTask);
       }
     } catch (e) {
-      throw e.toString();
+      print(e);
     }
 
     return workTasks;
@@ -74,7 +74,7 @@ class WorkTaskRepository {
         workTasks.add(workTask);
       }
     } catch (e) {
-      throw e.toString();
+      print(e);
     }
 
     return workTasks;
