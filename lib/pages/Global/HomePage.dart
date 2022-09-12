@@ -39,7 +39,14 @@ class _HomePageState extends State<HomePage> {
               Expanded(
                 child: ListTile(
                   leading: Image.asset("images/gif-logo.gif", height: 100, width: 50),
-                  title: const Text("Felipe Rabelo", style: TextStyle(color: Colors.white)),
+                  title: const Text(
+                    "Felipe Rabelo", 
+                    style: TextStyle(
+                      color: Colors.white, 
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20
+                    )
+                  ),
                   onTap: () {
                     Navigator.of(context).push(MaterialPageRoute(
                         builder: (context) => const ProfilePage()));
@@ -47,7 +54,7 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
               Expanded(
-                child: Image.asset("images/logo-header.png", height: 300,alignment: Alignment.centerRight)
+                child: Image.asset("images/logo-s-fundo.png", height: 300,alignment: Alignment.centerRight)
               ),
             ],
           ),
