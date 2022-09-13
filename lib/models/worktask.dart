@@ -1,5 +1,5 @@
 class WorkTask {
-  int? horario;
+  DateTime? horario;
   String? nomeCliente;
   String? preco;
   String? descricao;

@@ -25,13 +25,15 @@ class _AddWorkPageState extends State<AddWorkPage> {
 
   @override
   Widget build(BuildContext context) {
-    _clientsRepository.GetAll().then((value) {
-      setState(() {
-        value.forEach((element) => { 
-          autoCompleteclients.add(element.name.toString())
+    _clientsRepository.GetAll().then(
+      (value) {
+        setState(() {
+          value.forEach((element) => {
+            autoCompleteclients.add(element.name.toString())
+          });
+          var dateTime = DateTime.now();
+          workTask.horario = DateTime(dateTime.year, dateTime.month, dateTime.day, timeSelected.hour, timeSelected.minute);          
         });
-        workTask.horario = timeSelected.hour;
-      });
       },
     );
     return Scaffold(
@@ -66,10 +68,12 @@ class _AddWorkPageState extends State<AddWorkPage> {
                             borderRadius: BorderRadius.circular(10),
                           ),
                         ),
-                        suggestions: autoCompleteclients.map((e) => SearchFieldListItem(e, child: Text(e))).toList(),
-                        onSuggestionTap: (text){
-                          workTask.nomeCliente = text.searchKey;                        
-                        }, 
+                        suggestions: autoCompleteclients
+                            .map((e) => SearchFieldListItem(e, child: Text(e)))
+                            .toList(),
+                        onSuggestionTap: (text) {
+                          workTask.nomeCliente = text.searchKey;
+                        },
                       ),
                       const SizedBox(
                         width: 20,
@@ -78,7 +82,8 @@ class _AddWorkPageState extends State<AddWorkPage> {
                       TextFormField(
                         keyboardType: TextInputType.text,
                         decoration: InputDecoration(
-                            border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10)),
                             labelText: "Trabalho",
                             labelStyle: const TextStyle(color: Colors.black)),
                         onChanged: (text) {
@@ -92,7 +97,8 @@ class _AddWorkPageState extends State<AddWorkPage> {
                       TextFormField(
                         keyboardType: TextInputType.number,
                         decoration: InputDecoration(
-                            border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10)),
                             labelText: "Preço",
                             labelStyle: const TextStyle(color: Colors.black)),
                         onChanged: (text) {
@@ -134,7 +140,13 @@ class _AddWorkPageState extends State<AddWorkPage> {
                                 setState(() {
                                   timeSelected = TimeOfDay(
                                       hour: time.hour, minute: time.minute);
-                                  workTask.horario = timeSelected.hour;
+                                  var dateTime = DateTime.now();
+                                  workTask.horario = DateTime(
+                                      dateTime.year,
+                                      dateTime.month,
+                                      dateTime.day,
+                                      timeSelected.hour,
+                                      timeSelected.minute);
                                 });
                               }
                             },
@@ -146,12 +158,11 @@ class _AddWorkPageState extends State<AddWorkPage> {
                         margin: const EdgeInsets.all(24.0),
                         child: ElevatedButton(
                           style: ButtonStyle(
-                            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                              RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(30)
-                              )
-                            )
-                          ),
+                              shape: MaterialStateProperty.all<
+                                      RoundedRectangleBorder>(
+                                  RoundedRectangleBorder(
+                                      borderRadius:
+                                          BorderRadius.circular(30)))),
                           onPressed: () {
                             bool sucess = false;
                             _workTaskRepository.PostWorkTask(workTask)

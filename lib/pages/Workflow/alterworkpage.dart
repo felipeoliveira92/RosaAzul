@@ -39,13 +39,14 @@ class _AlterWorkPageState extends State<AlterWorkPage> {
                         height: 20,
                       ),
                       TextFormField(
-                        initialValue: widget.workTask.nomeCliente == null ? "" : widget.workTask.nomeCliente,
+                        initialValue: widget.workTask.nomeCliente == null
+                            ? ""
+                            : widget.workTask.nomeCliente,
                         keyboardType: TextInputType.text,
                         decoration: const InputDecoration(
                             border: OutlineInputBorder(),
                             labelText: "Cliente",
-                            labelStyle: TextStyle(color: Colors.black)
-                        ),
+                            labelStyle: TextStyle(color: Colors.black)),
                         onChanged: (text) {
                           widget.workTask.nomeCliente = text;
                         },
@@ -55,13 +56,14 @@ class _AlterWorkPageState extends State<AlterWorkPage> {
                         height: 20,
                       ),
                       TextFormField(
-                        initialValue: widget.workTask.descricao == null ? "" : widget.workTask.descricao,
+                        initialValue: widget.workTask.descricao == null
+                            ? ""
+                            : widget.workTask.descricao,
                         keyboardType: TextInputType.text,
                         decoration: const InputDecoration(
                             border: OutlineInputBorder(),
                             labelText: "Trabalho",
-                            labelStyle: TextStyle(color: Colors.black)
-                        ),
+                            labelStyle: TextStyle(color: Colors.black)),
                         onChanged: (text) {
                           widget.workTask.descricao = text;
                         },
@@ -71,13 +73,14 @@ class _AlterWorkPageState extends State<AlterWorkPage> {
                         height: 20,
                       ),
                       TextFormField(
-                        initialValue: widget.workTask.preco == null ? "" : widget.workTask.preco,
+                        initialValue: widget.workTask.preco == null
+                            ? ""
+                            : widget.workTask.preco,
                         keyboardType: TextInputType.number,
                         decoration: const InputDecoration(
                             border: OutlineInputBorder(),
                             labelText: "Preço",
-                            labelStyle: TextStyle(color: Colors.black)
-                        ),
+                            labelStyle: TextStyle(color: Colors.black)),
                         onChanged: (text) {
                           widget.workTask.preco = text;
                         },
@@ -86,16 +89,17 @@ class _AlterWorkPageState extends State<AlterWorkPage> {
                         width: 20,
                         height: 20,
                       ),
-
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Padding(
-                            padding: const EdgeInsets.all(16.0),
-                            child: widget.workTask.horario == null 
-                                ? const Text("Selecione um horario: ", style: TextStyle(fontSize: 20))
-                                : Text("Horario selecionado: ${widget.workTask.horario}", style: const TextStyle(fontSize: 20))
-                          ),
+                              padding: const EdgeInsets.all(16.0),
+                              child: widget.workTask.horario == null
+                                  ? const Text("Selecione um horario: ",
+                                      style: TextStyle(fontSize: 20))
+                                  : Text(
+                                      "Horario selecionado: ${widget.workTask.horario}",
+                                      style: const TextStyle(fontSize: 20))),
                           IconButton(
                             alignment: Alignment.centerRight,
                             icon: const Icon(Icons.access_time),
@@ -114,34 +118,40 @@ class _AlterWorkPageState extends State<AlterWorkPage> {
                               if (time != null) {
                                 setState(() {
                                   timeSelected = TimeOfDay(
-                                      hour: time.hour,
-                                      minute: time.minute);
-                                  widget.workTask.horario = timeSelected.hour;
+                                      hour: time.hour, minute: time.minute);
+                                  var dateTime = DateTime.now();
+                                  widget.workTask.horario = DateTime(
+                                    dateTime.year, 
+                                    dateTime.month, 
+                                    dateTime.day,
+                                    timeSelected.hour,
+                                    timeSelected.minute
+                                  );
                                 });
                               }
                             },
                           ),
                         ],
                       ),
-
                       Container(
                         alignment: Alignment.bottomCenter,
                         margin: const EdgeInsets.all(24.0),
                         child: ElevatedButton(
                           style: ButtonStyle(
-                            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                              RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(30)
-                              )
-                            )
-                          ),
+                              shape: MaterialStateProperty.all<
+                                      RoundedRectangleBorder>(
+                                  RoundedRectangleBorder(
+                                      borderRadius:
+                                          BorderRadius.circular(30)))),
                           onPressed: () {
                             _workTaskRepository.UpdateWorkTask(widget.workTask)
                                 .then((response) => {
                                       if (response.statusCode == 200)
                                         {
                                           Navigator.of(context).pushReplacement(
-                                              MaterialPageRoute(builder: (context) => const calendarpage()))
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      const calendarpage()))
                                         }
                                       else
                                         {
@@ -156,11 +166,12 @@ class _AlterWorkPageState extends State<AlterWorkPage> {
                           },
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
-                            children: const[
+                            children: const [
                               Icon(Icons.edit),
                               Padding(
                                 padding: EdgeInsets.all(16.0),
-                                child: Text('Alterar', style: TextStyle(fontSize: 20)),
+                                child: Text('Alterar',
+                                    style: TextStyle(fontSize: 20)),
                               )
                             ],
                           ),
