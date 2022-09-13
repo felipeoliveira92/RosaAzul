@@ -18,12 +18,12 @@ class WorkTask {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['horario'] = this.horario;
-    data['nomeCliente'] = this.nomeCliente;
-    data['preco'] = this.preco;
-    data['descricao'] = this.descricao;
-    data['id'] = this.id;
+    final Map<String, dynamic> data = Map<String, dynamic>();
+    data['horario'] = horario;
+    data['nomeCliente'] = nomeCliente;
+    data['preco'] = preco;
+    data['descricao'] = descricao;
+    data['id'] = id;
     return data;
   }
 }

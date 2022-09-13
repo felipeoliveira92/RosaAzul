@@ -1,3 +1,4 @@
+import 'package:appsalao/pages/Services/ActionsService.page.dart';
 import 'package:flutter/material.dart';
 
 class ServicePage extends StatefulWidget {
@@ -24,10 +25,9 @@ class _ServicePageState extends State<ServicePage> {
                   subtitle: Text("clients[index].cellphone.toString()"),
                   trailing: const Icon(Icons.navigate_next),
                   onTap: () {
-                    // Client clientSelected = clients[index];
-                    // Navigator.of(context).push(MaterialPageRoute(
-                    //     builder: (context) => ActionsClient(
-                    //         action: "Edit", client: clientSelected)));
+                    //Client clientSelected = clients[index];
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => ActionsServicePage(action: "Edit")));
                   },
                 );
               },

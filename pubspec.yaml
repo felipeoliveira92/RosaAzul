@@ -38,7 +38,23 @@ dependencies:
   cupertino_icons: ^1.0.2
   dio: ^4.0.6
   searchfield: ^0.7.0
-  
+  flutter_native_splash: ^2.2.9
+  flutter_launcher_icons: ^0.10.0
+
+
+flutter_native_splash:
+  color: "#78038C"
+  image: "images/logo-rosa.png"
+  android: true
+  ios: true
+
+flutter_icons:
+  image_path: "images/logo-rosa.png"
+  ios: true
+  remove_alpha_ios: true
+  android: "launcher_icon"
+  adaptive_icon_background: "#78038C"
+  adaptive_icon_foreground: "images/logo-s-fundo.png"
 
 dev_dependencies:
   flutter_test:

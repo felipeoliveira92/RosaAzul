@@ -38,7 +38,7 @@ class _HomePageState extends State<HomePage> {
             children: [
               Expanded(
                 child: ListTile(
-                  leading: Image.asset("images/gif-logo.gif", height: 100, width: 50),
+                  leading: Image.asset("images/Icon-user-profile.png", height: 100, width: 50),
                   title: const Text(
                     "Felipe Rabelo", 
                     style: TextStyle(
