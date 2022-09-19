@@ -4,7 +4,8 @@ import 'package:appsalao/models/user.dart';
 import 'package:dio/dio.dart';
 
 class UserRepository {
-  var url = 'https://62e29b1f3891dd9ba8ec4b6d.mockapi.io/api/v1/Users';
+  //var url = 'https://62e29b1f3891dd9ba8ec4b6d.mockapi.io/api/v1/Users';
+  var url = 'http://10.0.2.2:49154/User';
   final _dio = Dio();
 
   Future<List<User>> GetAll() async {
@@ -16,7 +17,7 @@ class UserRepository {
   }
 
   Future<User> GetUserById(int id) async {
-    url += '/$id';
+    url += '/id?id=$id';
     final response = await _dio.get(url);
     final user = User.fromJson(response.data);
 
@@ -57,9 +58,9 @@ class UserRepository {
   }
 
   Future<bool> Login(String username, String password) async {
-    //var user = GetUserByLogin(username);
+    var user = GetUserByLogin(username);
 
-    //if (user != null) return true;
+    if (user != null) return true;
 
     return false;
   }

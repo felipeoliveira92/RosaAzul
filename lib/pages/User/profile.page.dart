@@ -18,7 +18,7 @@ class _ProfilePageState extends State<ProfilePage> {
   var user = User();
 
   void InicializeFields(){    
-    _userRepository.GetUserById(1).then((response) => {
+    _userRepository.GetUserById(3).then((response) => {
       setState(() {
         user = response;
       })
@@ -39,12 +39,12 @@ class _ProfilePageState extends State<ProfilePage> {
       body: SingleChildScrollView(
         physics: const ScrollPhysics(),
         child: Column(children: <Widget>[
-          const SizedBox(
+          SizedBox(
             height: 100,
             child: DrawerHeader(
               child: ListTile(
-                leading: Icon(Icons.account_box),
-                title: Text("Felipe Rabelo", style: TextStyle(fontSize: 20)),
+                leading: const Icon(Icons.account_box),
+                title: Text("${user.name}", style: const TextStyle(fontSize: 20)),
               ),
             ),
           ),
@@ -66,16 +66,6 @@ class _ProfilePageState extends State<ProfilePage> {
             onTap: () {
               Navigator.of(context)
                 .push(MaterialPageRoute(builder: (context) => AlterFields(labelfield: "username",valueField: user.username,)));
-            },
-          ),
-          ListTile(
-            leading: const Icon(Icons.email),
-            title: const Text("email"),
-            subtitle: Text("${user.email}"),
-            trailing: const Icon(Icons.edit),
-            onTap: () {
-              Navigator.of(context)
-                .push(MaterialPageRoute(builder: (context) => AlterFields(labelfield: "email",valueField: user.email,)));
             },
           ),
           ListTile(
