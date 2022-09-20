@@ -3,6 +3,7 @@
 import 'package:appsalao/models/user.dart';
 import 'package:appsalao/models/worktask.dart';
 import 'package:appsalao/pages/Workflow/addworkpage.dart';
+import 'package:appsalao/repositories/client.repository.dart';
 import 'package:flutter/material.dart';
 import '../../repositories/worktask.repository.dart';
 import 'alterworkpage.dart';
@@ -19,12 +20,21 @@ class _calendarpageState extends State<calendarpage> {
   var dateSelected = DateTime.now().toString().split(' ')[0];
   final _workTaskRepository = WorkTaskRepository();
   List<WorkTask> workTasks = [];
-  
+
+  final _clientsRepository = ClientRepository();
+
   // ignore: non_constant_identifier_names
   void InicializeFields() {
     _workTaskRepository.GetWorkTaskById(DateTime.now().day).then((list) {
       setState(() {
         workTasks = list;
+      });
+    });
+    _clientsRepository.GetAll().then((value) {
+      setState(() {
+        workTasks.forEach((element) {
+          element.client = value.firstWhere((x) => x.id == element.idClient);        
+        });
       });
     });
   }
@@ -38,16 +48,6 @@ class _calendarpageState extends State<calendarpage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Calendario"),
-        // actions: [
-        //   IconButton(
-        //     icon: const Icon(Icons.add),
-        //     onPressed: () {
-        //       Navigator.of(context).push(MaterialPageRoute(
-        //           builder: (context) =>
-        //               AddWorkPage(dateSelected: dateSelected)));
-        //     },
-        //   ),
-        // ],
       ),
       body: SingleChildScrollView(
         physics: const ScrollPhysics(),
@@ -86,14 +86,13 @@ class _calendarpageState extends State<calendarpage> {
                     color: const Color.fromARGB(255, 226, 226, 226),
                     child: ListTile(
                       leading: const Icon(Icons.account_circle),
-                      title: Text(workTasks[index].nomeCliente.toString()),
-                      subtitle: Text(workTasks[index].descricao.toString()),
-                      trailing: Text(workTasks[index].horario.toString()),
+                      title: Text(workTasks[index].client!.name.toString()),
+                      subtitle: Text(workTasks[index].observation.toString()),
+                      trailing: Text(workTasks[index].dateInitial.toString()),
                       onTap: () {
                         WorkTask taskSelected = workTasks[index];
-                        Navigator.of(context).pushReplacement(MaterialPageRoute(
-                            builder: (context) =>
-                                AlterWorkPage(workTask: taskSelected)));
+                        Navigator.of(context).pushReplacement(
+                            MaterialPageRoute(builder: (context) => AlterWorkPage(workTask: taskSelected)));
                       },
                     ),
                   );
@@ -105,10 +104,8 @@ class _calendarpageState extends State<calendarpage> {
       ),
       floatingActionButton: FloatingActionButton.small(
         child: const Icon(Icons.add),
-        onPressed: () => Navigator.of(context).pushReplacement(MaterialPageRoute(
-                    builder: (context) => 
-                    AddWorkPage(dateSelected: dateSelected))
-        ),
+        onPressed: () => Navigator.of(context)
+            .pushReplacement(MaterialPageRoute(builder: (context) => AddWorkPage(dateSelected: dateSelected))),
       ),
     );
   }

@@ -43,7 +43,7 @@ dependencies:
 
 
 flutter_native_splash:
-  color: "#78038C"
+  color: "#673AB7"
   image: "images/logo-rosa.png"
   android: true
   ios: true
@@ -53,7 +53,7 @@ flutter_icons:
   ios: true
   remove_alpha_ios: true
   android: "launcher_icon"
-  adaptive_icon_background: "#78038C"
+  adaptive_icon_background: "#673AB7"
   adaptive_icon_foreground: "images/logo-s-fundo.png"
 
 dev_dependencies:

@@ -1,3 +1,5 @@
+// ignore_for_file: unrelated_type_equality_checks
+
 import 'package:appsalao/models/client.dart';
 import 'package:appsalao/models/worktask.dart';
 import 'package:appsalao/repositories/client.repository.dart';
@@ -29,10 +31,14 @@ class _AddWorkPageState extends State<AddWorkPage> {
       (value) {
         setState(() {
           value.forEach((element) => {
-            autoCompleteclients.add(element.name.toString())
+            autoCompleteclients.add(element.name.toString()),
+            if(element.id == workTask.idClient)
+            {
+              workTask.client = element,            
+            }
           });
           var dateTime = DateTime.now();
-          workTask.horario = DateTime(dateTime.year, dateTime.month, dateTime.day, timeSelected.hour, timeSelected.minute);          
+          workTask.dateInitial = DateTime(dateTime.year, dateTime.month, dateTime.day, timeSelected.hour, timeSelected.minute);          
         });
       },
     );
@@ -72,7 +78,7 @@ class _AddWorkPageState extends State<AddWorkPage> {
                             .map((e) => SearchFieldListItem(e, child: Text(e)))
                             .toList(),
                         onSuggestionTap: (text) {
-                          workTask.nomeCliente = text.searchKey;
+                          workTask.client!.name = text.searchKey;
                         },
                       ),
                       const SizedBox(
@@ -87,7 +93,7 @@ class _AddWorkPageState extends State<AddWorkPage> {
                             labelText: "Trabalho",
                             labelStyle: const TextStyle(color: Colors.black)),
                         onChanged: (text) {
-                          workTask.descricao = text;
+                          workTask.observation = text;
                         },
                       ),
                       const SizedBox(
@@ -102,7 +108,7 @@ class _AddWorkPageState extends State<AddWorkPage> {
                             labelText: "Preço",
                             labelStyle: const TextStyle(color: Colors.black)),
                         onChanged: (text) {
-                          workTask.preco = text;
+                          workTask.price = text as int;
                         },
                       ),
                       const SizedBox(
@@ -141,7 +147,7 @@ class _AddWorkPageState extends State<AddWorkPage> {
                                   timeSelected = TimeOfDay(
                                       hour: time.hour, minute: time.minute);
                                   var dateTime = DateTime.now();
-                                  workTask.horario = DateTime(
+                                  workTask.dateInitial = DateTime(
                                       dateTime.year,
                                       dateTime.month,
                                       dateTime.day,

@@ -39,16 +39,16 @@ class _AlterWorkPageState extends State<AlterWorkPage> {
                         height: 20,
                       ),
                       TextFormField(
-                        initialValue: widget.workTask.nomeCliente == null
+                        initialValue: widget.workTask.client!.name == null
                             ? ""
-                            : widget.workTask.nomeCliente,
+                            : widget.workTask.client!.name,
                         keyboardType: TextInputType.text,
                         decoration: const InputDecoration(
                             border: OutlineInputBorder(),
                             labelText: "Cliente",
                             labelStyle: TextStyle(color: Colors.black)),
                         onChanged: (text) {
-                          widget.workTask.nomeCliente = text;
+                          widget.workTask.client!.name = text;
                         },
                       ),
                       const SizedBox(
@@ -56,16 +56,16 @@ class _AlterWorkPageState extends State<AlterWorkPage> {
                         height: 20,
                       ),
                       TextFormField(
-                        initialValue: widget.workTask.descricao == null
+                        initialValue: widget.workTask.observation == null
                             ? ""
-                            : widget.workTask.descricao,
+                            : widget.workTask.observation,
                         keyboardType: TextInputType.text,
                         decoration: const InputDecoration(
                             border: OutlineInputBorder(),
                             labelText: "Trabalho",
                             labelStyle: TextStyle(color: Colors.black)),
                         onChanged: (text) {
-                          widget.workTask.descricao = text;
+                          widget.workTask.observation = text;
                         },
                       ),
                       const SizedBox(
@@ -73,16 +73,16 @@ class _AlterWorkPageState extends State<AlterWorkPage> {
                         height: 20,
                       ),
                       TextFormField(
-                        initialValue: widget.workTask.preco == null
+                        initialValue: widget.workTask.price == null
                             ? ""
-                            : widget.workTask.preco,
+                            : widget.workTask.price.toString(),
                         keyboardType: TextInputType.number,
                         decoration: const InputDecoration(
                             border: OutlineInputBorder(),
                             labelText: "Preço",
                             labelStyle: TextStyle(color: Colors.black)),
                         onChanged: (text) {
-                          widget.workTask.preco = text;
+                          widget.workTask.price = text as int;
                         },
                       ),
                       const SizedBox(
@@ -94,11 +94,11 @@ class _AlterWorkPageState extends State<AlterWorkPage> {
                         children: [
                           Padding(
                               padding: const EdgeInsets.all(16.0),
-                              child: widget.workTask.horario == null
+                              child: widget.workTask.dateInitial == null
                                   ? const Text("Selecione um horario: ",
                                       style: TextStyle(fontSize: 20))
                                   : Text(
-                                      "Horario selecionado: ${widget.workTask.horario}",
+                                      "Horario selecionado: ${widget.workTask.dateInitial}",
                                       style: const TextStyle(fontSize: 20))),
                           IconButton(
                             alignment: Alignment.centerRight,
@@ -120,7 +120,7 @@ class _AlterWorkPageState extends State<AlterWorkPage> {
                                   timeSelected = TimeOfDay(
                                       hour: time.hour, minute: time.minute);
                                   var dateTime = DateTime.now();
-                                  widget.workTask.horario = DateTime(
+                                  widget.workTask.dateInitial = DateTime(
                                     dateTime.year, 
                                     dateTime.month, 
                                     dateTime.day,

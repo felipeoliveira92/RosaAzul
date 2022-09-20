@@ -1,29 +1,47 @@
+import 'package:appsalao/models/client.dart';
+
 class WorkTask {
-  DateTime? horario;
-  String? nomeCliente;
-  String? preco;
-  String? descricao;
-  String? id;
-  //colocar referencia de client
+  int? id;
+  DateTime? dateInitial;
+  String? dateEnd;
+  int? idClient;
+  Client? client;
+  int? idService;
+  int? idUser;
+  int? price;
+  String? observation;
 
   WorkTask(
-      {this.horario, this.nomeCliente, this.preco, this.descricao, this.id});
+      {this.id,
+      this.dateInitial,
+      this.dateEnd,
+      this.idClient,
+      this.idService,
+      this.idUser,
+      this.price,
+      this.observation});
 
   WorkTask.fromJson(Map<String, dynamic> json) {
-    horario = json['horario'];
-    nomeCliente = json['nomeCliente'];
-    preco = json['preco'];
-    descricao = json['descricao'];
     id = json['id'];
+    dateInitial = json['dateInitial'];
+    dateEnd = json['dateEnd'];
+    idClient = json['idClient'];
+    idService = json['idService'];
+    idUser = json['idUser'];
+    price = json['price'];
+    observation = json['observation'];
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = Map<String, dynamic>();
-    data['horario'] = horario;
-    data['nomeCliente'] = nomeCliente;
-    data['preco'] = preco;
-    data['descricao'] = descricao;
+    final Map<String, dynamic> data = <String, dynamic>{};
     data['id'] = id;
+    data['dateInitial'] = dateInitial;
+    data['dateEnd'] = dateEnd;
+    data['idClient'] = idClient;
+    data['idService'] = idService;
+    data['idUser'] = idUser;
+    data['price'] = price;
+    data['observation'] = observation;
     return data;
   }
 }
