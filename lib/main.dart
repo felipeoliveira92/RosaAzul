@@ -1,3 +1,5 @@
+// ignore_for_file: use_key_in_widget_constructors
+
 import 'dart:io';
 
 import 'package:appsalao/pages/User/login.page.dart';

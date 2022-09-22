@@ -39,7 +39,7 @@ class _AlterWorkPageState extends State<AlterWorkPage> {
                         height: 20,
                       ),
                       TextFormField(
-                        initialValue: widget.workTask.client!.name == null
+                        initialValue: widget.workTask.client?.name == null
                             ? ""
                             : widget.workTask.client!.name,
                         keyboardType: TextInputType.text,
@@ -56,9 +56,7 @@ class _AlterWorkPageState extends State<AlterWorkPage> {
                         height: 20,
                       ),
                       TextFormField(
-                        initialValue: widget.workTask.observation == null
-                            ? ""
-                            : widget.workTask.observation,
+                        initialValue: widget.workTask.observation ?? "",
                         keyboardType: TextInputType.text,
                         decoration: const InputDecoration(
                             border: OutlineInputBorder(),
@@ -82,7 +80,7 @@ class _AlterWorkPageState extends State<AlterWorkPage> {
                             labelText: "Preço",
                             labelStyle: TextStyle(color: Colors.black)),
                         onChanged: (text) {
-                          widget.workTask.price = text as int;
+                          widget.workTask.price = text as double;
                         },
                       ),
                       const SizedBox(
@@ -120,13 +118,13 @@ class _AlterWorkPageState extends State<AlterWorkPage> {
                                   timeSelected = TimeOfDay(
                                       hour: time.hour, minute: time.minute);
                                   var dateTime = DateTime.now();
-                                  widget.workTask.dateInitial = DateTime(
-                                    dateTime.year, 
-                                    dateTime.month, 
-                                    dateTime.day,
-                                    timeSelected.hour,
-                                    timeSelected.minute
-                                  );
+                                  // widget.workTask.dateInitial = DateTime(
+                                  //   dateTime.year, 
+                                  //   dateTime.month, 
+                                  //   dateTime.day,
+                                  //   timeSelected.hour,
+                                  //   timeSelected.minute
+                                  // ).toString();
                                 });
                               }
                             },

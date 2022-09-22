@@ -4,7 +4,8 @@ import 'package:appsalao/models/worktask.dart';
 import 'package:dio/dio.dart';
 
 class WorkTaskRepository {
-  var baseUrl = 'https://62e29b1f3891dd9ba8ec4b6d.mockapi.io/api/v1/workTask';
+  //var baseUrl = 'https://62e29b1f3891dd9ba8ec4b6d.mockapi.io/api/v1/workTask';
+  var baseUrl = 'http://10.0.2.2:8000/workTask';
   final _dio = Dio();
 
   Future<List<WorkTask>> GetAll() async {
@@ -24,11 +25,12 @@ class WorkTaskRepository {
     return listWorks;
   }
 
-  Future<List<WorkTask>> GetAllByDate(int date) async {
+  Future<List<WorkTask>> GetAllByDate(DateTime date) async {
     List<WorkTask> listWorks = [];
+    var url = '$baseUrl/$date';
 
     try {
-      final response = await _dio.get(baseUrl);
+      final response = await _dio.get(url);
 
       if (response.statusCode == 200) {
         final body = response.data as List;
@@ -60,10 +62,9 @@ class WorkTaskRepository {
     return workTasks;
   }
 
-  Future<List<WorkTask>> GetWorkTaskByFilter(
-      DateTime dateInitial, DateTime dateEnd) async {
+  Future<List<WorkTask>> GetWorkTaskByFilter(DateTime dateInitial, DateTime dateEnd) async {
     List<WorkTask> workTasks = [];
-    var url = '$baseUrl/';
+    var url = '$baseUrl/filter?dateInitial=$dateInitial&dateEnd=$dateEnd';
 
     try {
       final response = await _dio.get(url);

@@ -18,7 +18,7 @@ class _ProfilePageState extends State<ProfilePage> {
   var user = User();
 
   void InicializeFields(){    
-    _userRepository.GetUserById(3).then((response) => {
+    _userRepository.GetUserById(2).then((response) => {
       setState(() {
         user = response;
       })
@@ -59,7 +59,7 @@ class _ProfilePageState extends State<ProfilePage> {
             },
           ),
           ListTile(
-            leading: const Icon(Icons.account_balance_rounded),
+            leading: const Icon(Icons.account_box),
             title: const Text("username"),
             subtitle: Text("${user.username}"),
             trailing: const Icon(Icons.edit),
@@ -69,9 +69,9 @@ class _ProfilePageState extends State<ProfilePage> {
             },
           ),
           ListTile(
-            leading: const Icon(Icons.password),
+            leading: const Icon(Icons.lock),
             title: const Text("password"),
-            subtitle: Text("${user.password}"),
+            subtitle: const Text("******"),
             trailing: const Icon(Icons.edit),
             onTap: () {
               Navigator.of(context)

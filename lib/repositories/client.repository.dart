@@ -4,14 +4,15 @@ import 'package:appsalao/models/client.dart';
 import 'package:dio/dio.dart';
 
 class ClientRepository {
-  var url = 'https://62e29b1f3891dd9ba8ec4b6d.mockapi.io/api/v1/Clients';
+  //var url = 'https://62e29b1f3891dd9ba8ec4b6d.mockapi.io/api/v1/Clients';
+  var baseUrl = 'http://10.0.2.2:8000/Client';
   final _dio = Dio();
 
   Future<List<Client>> GetAll() async {
     List<Client> clients = [];
 
     try {
-      final response = await _dio.get(url);
+      final response = await _dio.get(baseUrl);
       final body = response.data as List;
       clients = body.map((u) => Client.fromJson(u)).toList();
 
@@ -24,7 +25,7 @@ class ClientRepository {
   }
 
   Future<Client> GetClientById(int id) async {
-    url += '/$id';
+    var url = '$baseUrl/$id';
     final response = await _dio.get(url);
     final client = Client.fromJson(response.data);
 
@@ -32,7 +33,7 @@ class ClientRepository {
   }
 
   Future<Client> GetClientByName(String name) async {
-    url += '/$name';
+    var url = '$baseUrl/$name';
     final response = await _dio.get(url);
     final client = Client.fromJson(response.data);
 
@@ -43,22 +44,20 @@ class ClientRepository {
   Future<Response> PostClient(Client model) async {
     final user = model.toJson();
 
-    final response = await _dio.post(url, data: user);
+    final response = await _dio.post(baseUrl, data: user);
 
     return response;
   }
 
   Future<Response> UpdateClient(Client model) async {
     final user = model.toJson();
-
-    url += '/${model.id}';
-    final response = await _dio.put(url, data: user);
+    final response = await _dio.put(baseUrl, data: user);
 
     return response;
   }
 
   Future<Response> DeleteClient(int id) async {
-    url += '/$id';
+    var url = '$baseUrl/$id';
     final response = await _dio.delete(url);
 
     return response;

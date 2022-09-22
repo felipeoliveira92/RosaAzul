@@ -3,6 +3,7 @@
 import 'package:appsalao/models/client.dart';
 import 'package:appsalao/models/worktask.dart';
 import 'package:appsalao/repositories/client.repository.dart';
+import 'package:appsalao/repositories/typeservices.repository.dart';
 import 'package:flutter/material.dart';
 import 'package:searchfield/searchfield.dart';
 import '../../repositories/worktask.repository.dart';
@@ -21,27 +22,38 @@ class _AddWorkPageState extends State<AddWorkPage> {
   WorkTask workTask = WorkTask();
   final _workTaskRepository = WorkTaskRepository();
   final _clientsRepository = ClientRepository();
+  final _serviceRepository = TypeServiceRepository();
   List<Client> clients = [];
   List<String> autoCompleteclients = [];
+  List<String> autoCompleteServices = [];
   var timeSelected = TimeOfDay.now();
 
   @override
   Widget build(BuildContext context) {
-    _clientsRepository.GetAll().then(
-      (value) {
+    _clientsRepository.GetAll().then((value) {
         setState(() {
           value.forEach((element) => {
             autoCompleteclients.add(element.name.toString()),
-            if(element.id == workTask.idClient)
-            {
-              workTask.client = element,            
-            }
           });
+    
           var dateTime = DateTime.now();
-          workTask.dateInitial = DateTime(dateTime.year, dateTime.month, dateTime.day, timeSelected.hour, timeSelected.minute);          
+          workTask.dateInitial = DateTime(dateTime.year, 
+                                          dateTime.month, 
+                                          dateTime.day, 
+                                          timeSelected.hour, 
+                                          timeSelected.minute);          
         });
-      },
+      },    
     );
+    _serviceRepository.GetAll().then((value) {
+        setState(() {
+          value.forEach((element) => {
+            autoCompleteServices.add(element.name.toString()),
+          });         
+        });
+      },    
+    );
+
     return Scaffold(
       appBar: AppBar(
         title: const Text("Adicionando Novo Serviço"),
@@ -78,24 +90,50 @@ class _AddWorkPageState extends State<AddWorkPage> {
                             .map((e) => SearchFieldListItem(e, child: Text(e)))
                             .toList(),
                         onSuggestionTap: (text) {
-                          workTask.client!.name = text.searchKey;
+                          _clientsRepository.GetClientByName(text.searchKey).then((result) => {                            
+                            setState(() {
+                              workTask.client = result;
+                            })
+                          });
                         },
                       ),
                       const SizedBox(
                         width: 20,
                         height: 20,
                       ),
-                      TextFormField(
-                        keyboardType: TextInputType.text,
-                        decoration: InputDecoration(
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10)),
-                            labelText: "Trabalho",
-                            labelStyle: const TextStyle(color: Colors.black)),
-                        onChanged: (text) {
-                          workTask.observation = text;
+                      SearchField(
+                        hint: "Search",
+                        searchInputDecoration: InputDecoration(
+                          labelText: "Trabalho",
+                          labelStyle: const TextStyle(color: Colors.black),
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: const BorderSide(
+                                color: Colors.deepPurple, width: 1),
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                        ),
+                        suggestions: autoCompleteServices
+                            .map((e) => SearchFieldListItem(e, child: Text(e)))
+                            .toList(),
+                        onSuggestionTap: (text) {
+                          _serviceRepository.GetTypeServiceByName(text.searchKey).then((result) => {                            
+                            setState(() {
+                              workTask.typeService = result;
+                            })
+                          });
                         },
                       ),
+                      // TextFormField(
+                      //   keyboardType: TextInputType.text,
+                      //   decoration: InputDecoration(
+                      //       border: OutlineInputBorder(
+                      //           borderRadius: BorderRadius.circular(10)),
+                      //       labelText: "Trabalho",
+                      //       labelStyle: const TextStyle(color: Colors.black)),
+                      //   onChanged: (text) {
+                      //     workTask.observation = text;
+                      //   },
+                      // ),
                       const SizedBox(
                         width: 20,
                         height: 20,
@@ -108,7 +146,7 @@ class _AddWorkPageState extends State<AddWorkPage> {
                             labelText: "Preço",
                             labelStyle: const TextStyle(color: Colors.black)),
                         onChanged: (text) {
-                          workTask.price = text as int;
+                          workTask.price = double.parse(text);
                         },
                       ),
                       const SizedBox(
@@ -170,7 +208,7 @@ class _AddWorkPageState extends State<AddWorkPage> {
                                       borderRadius:
                                           BorderRadius.circular(30)))),
                           onPressed: () {
-                            bool sucess = false;
+                        
                             _workTaskRepository.PostWorkTask(workTask)
                                 .then((response) => {
                                       if (response.statusCode == 201)

@@ -21,20 +21,11 @@ class _calendarpageState extends State<calendarpage> {
   final _workTaskRepository = WorkTaskRepository();
   List<WorkTask> workTasks = [];
 
-  final _clientsRepository = ClientRepository();
-
   // ignore: non_constant_identifier_names
   void InicializeFields() {
-    _workTaskRepository.GetWorkTaskById(DateTime.now().day).then((list) {
+    _workTaskRepository.GetAllByDate(DateTime.now().toUtc()).then((list) {
       setState(() {
         workTasks = list;
-      });
-    });
-    _clientsRepository.GetAll().then((value) {
-      setState(() {
-        workTasks.forEach((element) {
-          element.client = value.firstWhere((x) => x.id == element.idClient);        
-        });
       });
     });
   }
@@ -61,7 +52,7 @@ class _calendarpageState extends State<calendarpage> {
                 lastDate: DateTime.utc(2050, 01, 01),
                 onDateChanged: (DateTime value) {
                   setState(() {
-                    _workTaskRepository.GetWorkTaskById(value.day).then((list) {
+                    _workTaskRepository.GetAllByDate(value).then((list) {
                       setState(() {
                         workTasks = list;
                       });
@@ -87,8 +78,8 @@ class _calendarpageState extends State<calendarpage> {
                     child: ListTile(
                       leading: const Icon(Icons.account_circle),
                       title: Text(workTasks[index].client!.name.toString()),
-                      subtitle: Text(workTasks[index].observation.toString()),
-                      trailing: Text(workTasks[index].dateInitial.toString()),
+                      subtitle: Text(workTasks[index].typeService!.name.toString()),
+                      trailing: Text("${workTasks[index].dateInitial?.hour}:${workTasks[index].dateInitial?.minute}"),
                       onTap: () {
                         WorkTask taskSelected = workTasks[index];
                         Navigator.of(context).pushReplacement(
@@ -105,7 +96,7 @@ class _calendarpageState extends State<calendarpage> {
       floatingActionButton: FloatingActionButton.small(
         child: const Icon(Icons.add),
         onPressed: () => Navigator.of(context)
-            .pushReplacement(MaterialPageRoute(builder: (context) => AddWorkPage(dateSelected: dateSelected))),
+            .push(MaterialPageRoute(builder: (context) => AddWorkPage(dateSelected: dateSelected))),
       ),
     );
   }

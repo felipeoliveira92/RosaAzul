@@ -1,7 +1,7 @@
 class Client {
   String? name;
   String? cellphone;
-  String? id;
+  int? id;
 
   Client({this.name, this.cellphone, this.id});
 
