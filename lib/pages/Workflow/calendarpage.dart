@@ -3,7 +3,6 @@
 import 'package:appsalao/models/user.dart';
 import 'package:appsalao/models/worktask.dart';
 import 'package:appsalao/pages/Workflow/addworkpage.dart';
-import 'package:appsalao/repositories/client.repository.dart';
 import 'package:flutter/material.dart';
 import '../../repositories/worktask.repository.dart';
 import 'alterworkpage.dart';
@@ -82,7 +81,7 @@ class _calendarpageState extends State<calendarpage> {
                       trailing: Text("${workTasks[index].dateInitial?.hour}:${workTasks[index].dateInitial?.minute}"),
                       onTap: () {
                         WorkTask taskSelected = workTasks[index];
-                        Navigator.of(context).pushReplacement(
+                        Navigator.of(context).push(
                             MaterialPageRoute(builder: (context) => AlterWorkPage(workTask: taskSelected)));
                       },
                     ),

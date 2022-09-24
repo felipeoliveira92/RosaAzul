@@ -2,6 +2,8 @@
 
 import 'package:appsalao/models/user.dart';
 import 'package:appsalao/pages/Generic/alterfields.page.dart';
+import 'package:appsalao/pages/User/ActionsUser.page.dart';
+import 'package:appsalao/pages/User/ChangePassword.page.dart';
 import 'package:appsalao/pages/User/login.page.dart';
 import 'package:appsalao/repositories/user.repository.dart';
 import 'package:flutter/material.dart';
@@ -39,43 +41,55 @@ class _ProfilePageState extends State<ProfilePage> {
       body: SingleChildScrollView(
         physics: const ScrollPhysics(),
         child: Column(children: <Widget>[
-          SizedBox(
-            height: 100,
-            child: DrawerHeader(
-              child: ListTile(
-                leading: const Icon(Icons.account_box),
-                title: Text("${user.name}", style: const TextStyle(fontSize: 20)),
+          if(user.type == 2)
+            SizedBox(
+              height: 100,
+              child: DrawerHeader(
+                child: ListTile(
+                  leading: const Icon(Icons.account_box),
+                  title: Text("${user.name}", style: const TextStyle(fontSize: 20)),                
+                  trailing: IconButton(
+                    icon: const Icon(Icons.edit),
+                    tooltip: "Alterar dados",
+                    onPressed: () {
+                      Navigator.of(context).push(MaterialPageRoute(builder: (context) => 
+                      ActionsUserPage(action: "Edit", user: user)));
+                    },
+                  ),
+                ),              
               ),
             ),
-          ),
+          if(user.type == 1)
+            SizedBox(
+              height: 100,
+              child: DrawerHeader(
+                child: ListTile(
+                  leading: const Icon(Icons.account_box),
+                  title: Text("${user.name}", style: const TextStyle(fontSize: 20)),
+                ),
+              ),
+            ),
+          
           ListTile(
+            enabled: false,
             leading: const Icon(Icons.abc),
             title: const Text("Nome"),
-            subtitle: Text("${user.name}"),
-            trailing: const Icon(Icons.edit),
-            onTap: () {
-              Navigator.of(context)
-                .push(MaterialPageRoute(builder: (context) => AlterFields(labelfield: "Nome",valueField: user.name,)));
-            },
+            subtitle: Text("${user.name}")            
           ),
           ListTile(
+            enabled: false,
             leading: const Icon(Icons.account_box),
             title: const Text("username"),
-            subtitle: Text("${user.username}"),
-            trailing: const Icon(Icons.edit),
-            onTap: () {
-              Navigator.of(context)
-                .push(MaterialPageRoute(builder: (context) => AlterFields(labelfield: "username",valueField: user.username,)));
-            },
+            subtitle: Text("${user.username}")
           ),
           ListTile(
             leading: const Icon(Icons.lock),
-            title: const Text("password"),
+            title: const Text("Alterar senha"),
             subtitle: const Text("******"),
-            trailing: const Icon(Icons.edit),
+            //trailing: const Icon(Icons.edit),
             onTap: () {
-              Navigator.of(context)
-                .push(MaterialPageRoute(builder: (context) => AlterFields(labelfield: "Password",valueField: user.password,)));
+              Navigator.of(context).push(MaterialPageRoute(builder: (context) => 
+              ChangePasswordPage(user: user,password: user.password)));
             },
           ),
           ListTile(

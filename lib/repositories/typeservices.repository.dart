@@ -55,7 +55,7 @@ class TypeServiceRepository {
     return response;
   }
 
-  Future<Response> DeleteTypeService(int id) async {
+  Future<Response> DeleteTypeService(int? id) async {
     var url = '$baseUrl/$id';
     final response = await _dio.delete(url);
 

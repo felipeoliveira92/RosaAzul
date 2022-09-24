@@ -39,9 +39,7 @@ class _AlterWorkPageState extends State<AlterWorkPage> {
                         height: 20,
                       ),
                       TextFormField(
-                        initialValue: widget.workTask.client?.name == null
-                            ? ""
-                            : widget.workTask.client!.name,
+                        initialValue: widget.workTask.client?.name == null ? "" : widget.workTask.client!.name,
                         keyboardType: TextInputType.text,
                         decoration: const InputDecoration(
                             border: OutlineInputBorder(),
@@ -56,7 +54,7 @@ class _AlterWorkPageState extends State<AlterWorkPage> {
                         height: 20,
                       ),
                       TextFormField(
-                        initialValue: widget.workTask.observation ?? "",
+                        initialValue: widget.workTask.typeService?.name ?? "",
                         keyboardType: TextInputType.text,
                         decoration: const InputDecoration(
                             border: OutlineInputBorder(),
@@ -71,9 +69,7 @@ class _AlterWorkPageState extends State<AlterWorkPage> {
                         height: 20,
                       ),
                       TextFormField(
-                        initialValue: widget.workTask.price == null
-                            ? ""
-                            : widget.workTask.price.toString(),
+                        initialValue: widget.workTask.price == null ? "" : widget.workTask.price.toString(),
                         keyboardType: TextInputType.number,
                         decoration: const InputDecoration(
                             border: OutlineInputBorder(),
@@ -93,10 +89,8 @@ class _AlterWorkPageState extends State<AlterWorkPage> {
                           Padding(
                               padding: const EdgeInsets.all(16.0),
                               child: widget.workTask.dateInitial == null
-                                  ? const Text("Selecione um horario: ",
-                                      style: TextStyle(fontSize: 20))
-                                  : Text(
-                                      "Horario selecionado: ${widget.workTask.dateInitial}",
+                                  ? const Text("Selecione um horario: ", style: TextStyle(fontSize: 20))
+                                  : Text("Horario selecionado: ${widget.workTask.dateInitial?.hour}:${widget.workTask.dateInitial?.minute}",
                                       style: const TextStyle(fontSize: 20))),
                           IconButton(
                             alignment: Alignment.centerRight,
@@ -105,22 +99,18 @@ class _AlterWorkPageState extends State<AlterWorkPage> {
                               final time = await showTimePicker(
                                 context: context,
                                 builder: (context, child) => MediaQuery(
-                                    data: MediaQuery.of(context)
-                                        .copyWith(alwaysUse24HourFormat: true),
+                                    data: MediaQuery.of(context).copyWith(alwaysUse24HourFormat: true),
                                     child: child ?? Container()),
-                                initialTime: TimeOfDay(
-                                    hour: DateTime.now().hour,
-                                    minute: DateTime.now().minute),
+                                initialTime: TimeOfDay(hour: DateTime.now().hour, minute: DateTime.now().minute),
                               );
 
                               if (time != null) {
                                 setState(() {
-                                  timeSelected = TimeOfDay(
-                                      hour: time.hour, minute: time.minute);
+                                  timeSelected = TimeOfDay(hour: time.hour, minute: time.minute);
                                   var dateTime = DateTime.now();
                                   // widget.workTask.dateInitial = DateTime(
-                                  //   dateTime.year, 
-                                  //   dateTime.month, 
+                                  //   dateTime.year,
+                                  //   dateTime.month,
                                   //   dateTime.day,
                                   //   timeSelected.hour,
                                   //   timeSelected.minute
@@ -136,31 +126,24 @@ class _AlterWorkPageState extends State<AlterWorkPage> {
                         margin: const EdgeInsets.all(24.0),
                         child: ElevatedButton(
                           style: ButtonStyle(
-                              shape: MaterialStateProperty.all<
-                                      RoundedRectangleBorder>(
-                                  RoundedRectangleBorder(
-                                      borderRadius:
-                                          BorderRadius.circular(30)))),
+                              shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                                  RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)))),
                           onPressed: () {
-                            _workTaskRepository.UpdateWorkTask(widget.workTask)
-                                .then((response) => {
-                                      if (response.statusCode == 200)
-                                        {
-                                          Navigator.of(context).pushReplacement(
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      const calendarpage()))
-                                        }
-                                      else
-                                        {
-                                          // ignore: prefer_const_constructors
-                                          AlertDialog(
-                                            title: const Text(
-                                                'Basic dialog title'),
-                                            content: const Text('A dialog'),
-                                          )
-                                        }
-                                    });
+                            _workTaskRepository.UpdateWorkTask(widget.workTask).then((response) => {
+                                  if (response.statusCode == 200)
+                                    {
+                                      Navigator.of(context).pushReplacement(
+                                          MaterialPageRoute(builder: (context) => const calendarpage()))
+                                    }
+                                  else
+                                    {
+                                      // ignore: prefer_const_constructors
+                                      AlertDialog(
+                                        title: const Text('Basic dialog title'),
+                                        content: const Text('A dialog'),
+                                      )
+                                    }
+                                });
                           },
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -168,8 +151,7 @@ class _AlterWorkPageState extends State<AlterWorkPage> {
                               Icon(Icons.edit),
                               Padding(
                                 padding: EdgeInsets.all(16.0),
-                                child: Text('Alterar',
-                                    style: TextStyle(fontSize: 20)),
+                                child: Text('Alterar', style: TextStyle(fontSize: 20)),
                               )
                             ],
                           ),

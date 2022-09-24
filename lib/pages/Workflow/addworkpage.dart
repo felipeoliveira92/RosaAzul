@@ -207,27 +207,24 @@ class _AddWorkPageState extends State<AddWorkPage> {
                                   RoundedRectangleBorder(
                                       borderRadius:
                                           BorderRadius.circular(30)))),
-                          onPressed: () {
-                        
+                          onPressed: () {                        
                             _workTaskRepository.PostWorkTask(workTask)
-                                .then((response) => {
-                                      if (response.statusCode == 201)
-                                        {
-                                          Navigator.of(context).pushReplacement(
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      const calendarpage()))
-                                        }
-                                      else
-                                        {
-                                          // ignore: prefer_const_constructors
-                                          AlertDialog(
-                                            title: const Text(
-                                                'Basic dialog title'),
-                                            content: const Text('A dialog'),
-                                          )
-                                        }
-                                    });
+                                .then((response) => 
+                                {
+                                  if (response.statusCode == 200)
+                                  {
+                                    Navigator.of(context).pushReplacement(
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                const calendarpage()
+                                        )
+                                    )
+                                  }
+                                  else
+                                  {
+                                    ScaffoldMessenger.of(context).showSnackBar(snackBar)
+                                  }
+                                });
                           },
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -253,3 +250,10 @@ class _AddWorkPageState extends State<AddWorkPage> {
     );
   }
 }
+
+// ignore: prefer_const_constructors
+final snackBar = SnackBar(
+            content:  const Text('Yay! A SnackBar!'),
+            backgroundColor: Colors.redAccent,
+);
+          

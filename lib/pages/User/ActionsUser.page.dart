@@ -1,28 +1,25 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'dart:developer';
-
-import 'package:appsalao/repositories/typeservices.repository.dart';
 import 'package:flutter/material.dart';
 
-import 'package:appsalao/models/typeServices.dart';
-import 'package:appsalao/pages/Services/Service.page.dart';
+import 'package:appsalao/models/user.dart';
+import 'package:appsalao/repositories/user.repository.dart';
 
-class ActionsServicePage extends StatefulWidget {
+class ActionsUserPage extends StatefulWidget {
+  User user;
   String action;
-  TypeService service;
 
-  ActionsServicePage({
+  ActionsUserPage({
     Key? key,
+    required this.user,
     required this.action,
-    required this.service,
   }) : super(key: key);
 
   @override
-  State<ActionsServicePage> createState() => _ActionsServicePageState();
+  State<ActionsUserPage> createState() => _ActionsUserPageState();
 }
 
-class _ActionsServicePageState extends State<ActionsServicePage> {
-  final _serviceRepository = TypeServiceRepository();
+class _ActionsUserPageState extends State<ActionsUserPage> {
+  final userRepository = UserRepository();
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +31,7 @@ class _ActionsServicePageState extends State<ActionsServicePage> {
         actions: [
           if (widget.action != "Create")
             IconButton(
-              tooltip: "Deletar ${widget.service.description ?? ""}",
+              tooltip: "Deletar ${widget.user.name ?? ""}",
               icon: const Icon(Icons.delete),
               onPressed: () {
                 final snackBar = SnackBar(
@@ -43,7 +40,7 @@ class _ActionsServicePageState extends State<ActionsServicePage> {
                   action: SnackBarAction(
                     label: 'Deletar',
                     onPressed: () {
-                      _serviceRepository.DeleteTypeService(widget.service.id);
+                      userRepository.DeleteUser(widget.user.id);
                     },
                   ),
                 );
@@ -60,12 +57,12 @@ class _ActionsServicePageState extends State<ActionsServicePage> {
             child: Column(
               children: [
                 TextFormField(
-                  initialValue: widget.service.name ?? "",
+                  initialValue: widget.user.name ?? "",
                   keyboardType: TextInputType.text,
                   decoration: const InputDecoration(
                       border: OutlineInputBorder(), labelText: "Nome", labelStyle: TextStyle(color: Colors.black)),
                   onChanged: (text) {
-                    widget.service.name = text;
+                    widget.user.name = text;
                   },
                 ),
                 const SizedBox(
@@ -73,12 +70,12 @@ class _ActionsServicePageState extends State<ActionsServicePage> {
                   height: 20,
                 ),
                 TextFormField(
-                  initialValue: widget.service.description ?? "",
+                  initialValue: widget.user.username ?? "",
                   keyboardType: TextInputType.phone,
                   decoration: const InputDecoration(
-                      border: OutlineInputBorder(), labelText: "Descrição", labelStyle: TextStyle(color: Colors.black)),
+                      border: OutlineInputBorder(), labelText: "Username", labelStyle: TextStyle(color: Colors.black)),
                   onChanged: (text) {
-                    widget.service.description = text;
+                    widget.user.username = text;
                   },
                 ),
                 const SizedBox(
@@ -86,12 +83,12 @@ class _ActionsServicePageState extends State<ActionsServicePage> {
                   height: 20,
                 ),
                 TextFormField(
-                  initialValue: widget.service.price == null ? "" : widget.service.price.toString(),
+                  initialValue: widget.user.password ?? "",
                   keyboardType: TextInputType.phone,
                   decoration: const InputDecoration(
-                      border: OutlineInputBorder(), labelText: "Preço", labelStyle: TextStyle(color: Colors.black)),
+                      border: OutlineInputBorder(), labelText: "Senha", labelStyle: TextStyle(color: Colors.black)),
                   onChanged: (text) {
-                    widget.service.price = double.parse(text);
+                    widget.user.password = text;
                   },
                 ),
                 const SizedBox(
@@ -105,47 +102,7 @@ class _ActionsServicePageState extends State<ActionsServicePage> {
                     style: ButtonStyle(
                         shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                             RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)))),
-                    onPressed: () {
-                      if (widget.action == "Create") {
-                        // _clientRepository.PostClient(widget.client).then((response) => {
-                        //     if (response.statusCode == 201)
-                        //     {
-                        //       Navigator.of(context).push(
-                        //           MaterialPageRoute(
-                        //               builder: (context) =>
-                        //                   const ServicePage()))
-                        //     }
-                        //     else
-                        //     {
-                        //       // ignore: prefer_const_constructors
-                        //       AlertDialog(
-                        //         title: const Text(
-                        //             'Basic dialog title'),
-                        //         content: const Text('A dialog'),
-                        //       )
-                        //     }
-                        // });
-                      } else if (widget.action == "Edit") {
-                        // _clientRepository.UpdateClient(widget.client).then((response) => {
-                        //     if (response.statusCode == 200)
-                        //     {
-                        //       Navigator.of(context).push(
-                        //           MaterialPageRoute(
-                        //               builder: (context) =>
-                        //                   const ServicePage()))
-                        //     }
-                        //     else
-                        //     {
-                        //       // ignore: prefer_const_constructors
-                        //       AlertDialog(
-                        //         title: const Text(
-                        //             'Basic dialog title'),
-                        //         content: const Text('A dialog'),
-                        //       )
-                        //     }
-                        // });
-                      }
-                    },
+                    onPressed: () {},
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [

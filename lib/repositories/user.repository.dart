@@ -5,11 +5,11 @@ import 'package:dio/dio.dart';
 
 class UserRepository {
   //var url = 'https://62e29b1f3891dd9ba8ec4b6d.mockapi.io/api/v1/Users';
-  var url = 'http://10.0.2.2:8000/User';
+  var baseUrl = 'http://10.0.2.2:8000/User';
   final _dio = Dio();
 
   Future<List<User>> GetAll() async {
-    final response = await _dio.get(url);
+    final response = await _dio.get(baseUrl);
     final body = response.data as List;
     final users = body.map((u) => User.fromJson(u)).toList();
 
@@ -17,7 +17,7 @@ class UserRepository {
   }
 
   Future<User> GetUserById(int id) async {
-    url += '/id?id=$id';
+    var url = '$baseUrl/$id';
     var user = User();
 
     try {
@@ -34,7 +34,7 @@ class UserRepository {
   }
 
   Future<User> GetUserByLogin(String username) async {
-    url += '/$username';
+    var url = '$baseUrl/$username';
     final response = await _dio.get(url);
     final user = response.data as User;
 
@@ -45,22 +45,20 @@ class UserRepository {
   Future<Response> PostUser(User model) async {
     final user = model.toJson();
 
-    final response = await _dio.post(url, data: user);
+    final response = await _dio.post(baseUrl, data: user);
 
     return response;
   }
 
   Future<Response> UpdateUser(User model) async {
     final user = model.toJson();
-
-    url += '/${model.id}';
-    final response = await _dio.put(url, data: user);
+    final response = await _dio.put(baseUrl, data: user);
 
     return response;
   }
 
-  Future<Response> DeleteUser(int id) async {
-    url += '/$id';
+  Future<Response> DeleteUser(int? id) async {
+    var url = '$baseUrl/$id';
     final response = await _dio.delete(url);
 
     return response;
