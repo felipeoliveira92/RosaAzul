@@ -103,15 +103,26 @@ class _HomePageState extends State<HomePage> {
 DrawerListView(BuildContext context) {
   return ListView(
     children: <Widget>[
-      const DrawerHeader(
-        decoration: BoxDecoration(
-          color: Colors.deepPurple,
-        ),
-        child: Text(
-          'Opções',
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 24,
+      SizedBox(
+        height: 100,
+        child: DrawerHeader(
+          decoration: const BoxDecoration(
+            color: Colors.deepPurple,
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            // ignore: prefer_const_literals_to_create_immutables
+            children: [
+              const Icon(Icons.settings, color: Colors.white,),
+              const SizedBox(width: 10,),
+              const Text(
+                'Opções',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 24,
+                ),
+              ),
+            ],
           ),
         ),
       ),
@@ -173,6 +184,20 @@ DrawerListView(BuildContext context) {
               MaterialPageRoute(builder: (context) => const HistoricPage()));
         },
       ),
+
+      const Divider(),
+
+      ListTile(
+        leading: const Icon(Icons.groups),
+        title: const Text("Usuarios"),
+        subtitle: const Text("Adicionar usuarios."),
+        onTap: () {
+          Navigator.of(context).push(
+              MaterialPageRoute(builder: (context) => const HistoricPage()));
+        },
+      ),
+
+      
     ],
   );
 }

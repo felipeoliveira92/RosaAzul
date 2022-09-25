@@ -70,9 +70,8 @@ class WorkTaskRepository {
       final response = await _dio.get(url);
 
       if (response.statusCode == 200) {
-        final workTask = WorkTask.fromJson(response.data);
-
-        workTasks.add(workTask);
+        final body = response.data as List;
+        workTasks = body.map((w) => WorkTask.fromJson(w)).toList();
       }
     } catch (e) {
       print(e);

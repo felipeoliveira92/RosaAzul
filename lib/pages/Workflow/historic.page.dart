@@ -11,8 +11,7 @@ class HistoricPage extends StatefulWidget {
 
 class _HistoricPageState extends State<HistoricPage> {
   var initialDate = DateTime.now();
-  var initialDateRange =
-      DateTimeRange(start: DateTime.now(), end: DateTime.now());
+  var initialDateRange = DateTimeRange(start: DateTime.now(), end: DateTime.now());
   final _workTaskRepository = WorkTaskRepository();
   List<WorkTask> workTasks = [];
 
@@ -21,7 +20,7 @@ class _HistoricPageState extends State<HistoricPage> {
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
-        title: const Text("Faturamento"),      
+        title: const Text("Faturamento"),
       ),
       body: SingleChildScrollView(
         physics: const ScrollPhysics(),
@@ -38,8 +37,8 @@ class _HistoricPageState extends State<HistoricPage> {
                 DateRanger(
                     initialRange: initialDateRange,
                     onRangeChanged: (range) {
-                      _workTaskRepository.GetWorkTaskByFilter(initialDateRange.start, initialDateRange.end)
-                        .then((list) {
+                      _workTaskRepository.GetWorkTaskByFilter(initialDateRange.start, initialDateRange.end).then(
+                        (list) {
                           setState(() {
                             initialDateRange = range;
                             workTasks = list;
@@ -47,7 +46,21 @@ class _HistoricPageState extends State<HistoricPage> {
                         },
                       );
                     }),
-                BuildListView(workTasks),
+                //BuildListView(workTasks),
+                DataTable(
+                  columns: [
+                    DataColumn(label: Text("Cliente")),
+                    DataColumn(label: Text("Valor")),
+                    DataColumn(label: Text("Data"))
+                  ],
+                  rows: [
+                    DataRow(cells: [
+                        DataCell(Text("01")),
+                        DataCell(Text("01")),
+                        DataCell(Text("01")),
+                      ]),
+                ],
+                ),
               ],
             ),
           ),
@@ -64,11 +77,16 @@ BuildListView(List<WorkTask> listWorkTasks) {
     shrinkWrap: true,
     itemCount: listWorkTasks.length,
     itemBuilder: (context, index) {
+      var date = "${listWorkTasks[index].dateInitial!.day}-";
+          date += "${listWorkTasks[index].dateInitial!.month}-";
+          date += "${listWorkTasks[index].dateInitial!.year} as ";
+          date += "${listWorkTasks[index].dateInitial!.hour}:";
+          date += "${listWorkTasks[index].dateInitial!.minute}";
       return ListTile(
         leading: const Icon(Icons.account_circle),
-        title: Text("TItulo $index"),
-        subtitle: Text("Subtitulo $index"),
-        trailing: Text("Trailing $index"),
+        title: Text(listWorkTasks[index].client!.name ?? ""),
+        subtitle: Text(listWorkTasks[index].price.toString() ?? ""),
+        trailing: Text(date),
         onTap: () {
           // Navigator.of(context).push(MaterialPageRoute(
           //     builder: (context) => login()));

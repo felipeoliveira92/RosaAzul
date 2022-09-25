@@ -23,12 +23,10 @@ class UserRepository {
     try {
       final response = await _dio.get(url);
 
-      if(response.statusCode == 200)
-        user = User.fromJson(response.data); 
-        
+      if (response.statusCode == 200) user = User.fromJson(response.data);
+
       return user;
-    } 
-    catch (e) {
+    } catch (e) {
       return user;
     }
   }
@@ -65,10 +63,15 @@ class UserRepository {
   }
 
   Future<bool> Login(String username, String password) async {
-    var user = GetUserByLogin(username);
+    var url = 'http://10.0.2.2:8000/login?username=$username&password=$password';
 
-    if (user != null) return true;
+    final response = await _dio.post(url);
 
-    return false;
+    if (response.statusCode == 200){
+      return true;
+    }
+    else{
+      return false;
+    }    
   }
 }
