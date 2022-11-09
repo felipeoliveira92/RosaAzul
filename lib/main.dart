@@ -3,6 +3,7 @@
 import 'dart:io';
 
 import 'package:appsalao/pages/Global/HomePage.dart';
+import 'package:appsalao/pages/Services/Service.page.dart';
 import 'package:appsalao/pages/User/login.page.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -26,7 +27,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.deepPurple,
       ),
-      home: LoginPage(),
+      home: HomePage(),
     );
   }
 }

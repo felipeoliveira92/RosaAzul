@@ -1,64 +1,90 @@
 // ignore_for_file: non_constant_identifier_names
 
+import 'package:appsalao/database/db.dart';
 import 'package:appsalao/models/typeServices.dart';
-import 'package:dio/dio.dart';
+import 'package:sqflite/sqflite.dart';
 
 class TypeServiceRepository {
-  //var url = 'https://62e29b1f3891dd9ba8ec4b6d.mockapi.io/api/v1/';
-  var baseUrl = 'http://10.0.2.2:8000/Service';
-  final _dio = Dio();
+  //final _dbApp = DbApp().database;
 
   Future<List<TypeService>> GetAll() async {
+
+    final Database _dbApp = await DbApp().initDatabase();
     List<TypeService> typeServices = [];
 
     try {
-      final response = await _dio.get(baseUrl);
-      final body = response.data as List;
-      typeServices = body.map((u) => TypeService.fromJson(u)).toList();
+      final result = await _dbApp.rawQuery("SELECT * FROM TypeServices");
+      typeServices = result.map((e) => TypeService.fromJson(e)).toList();
 
       return typeServices;
-    } 
-    catch (e) {
-      print(e);
+    } catch (e) {
       return typeServices;
     }
   }
 
   Future<TypeService> GetTypeServiceById(int id) async {
-    var url = '$baseUrl/$id';
-    final response = await _dio.get(url);
-    final typeService = TypeService.fromJson(response.data);
 
-    return typeService;
+    final Database _dbApp = await DbApp().initDatabase();
+    TypeService typeService = TypeService();
+
+    try {
+      final result = await _dbApp.rawQuery("SELECT * FROM TypeServices WHERE id = $id");
+      typeService = TypeService.fromJson(result.first);
+
+      return typeService;
+    } catch (e) {
+      return typeService;
+    }
   }
 
   Future<TypeService> GetTypeServiceByName(String name) async {
-    var url = '$baseUrl/$name';
-    final response = await _dio.get(url);
-    final typeService = TypeService.fromJson(response.data);
 
-    return typeService;
-    //arrumar
+    final Database _dbApp = await DbApp().initDatabase();
+    TypeService typeService = TypeService();
+
+    try {
+      final result = await _dbApp.rawQuery("SELECT * FROM TypeServices WHERE name = '$name'");
+      typeService = TypeService.fromJson(result.first);
+
+      return typeService;
+    } catch (e) {
+      return typeService;
+    }
   }
 
-  Future<Response> PostTypeService(TypeService model) async {
-    final typeService = model.toJson();
-    final response = await _dio.post(baseUrl, data: typeService);
+  Future<int> PostTypeService(TypeService model) async {
+    final Database _dbApp = await DbApp().initDatabase();
 
-    return response;
+    try {
+      final result = await _dbApp.insert("TypeServices", model.toJson());
+      return result;
+    } catch (e) {
+      return 0;
+    }
   }
 
-  Future<Response> UpdateTypeService(TypeService model) async {
-    final typeService = model.toJson();
-    final response = await _dio.put(baseUrl, data: typeService);
+  Future<int> UpdateTypeService(TypeService model) async {
 
-    return response;
+    final Database _dbApp = await DbApp().initDatabase();
+
+    try {
+      final result = await _dbApp.update("TypeServices", model.toJson(), where: "id = ?", whereArgs: [model.id]);
+
+      return result;
+    } catch (e) {
+      return 0;
+    }
   }
 
-  Future<Response> DeleteTypeService(int? id) async {
-    var url = '$baseUrl/$id';
-    final response = await _dio.delete(url);
+  Future<int> DeleteTypeService(int? id) async {
+    final Database _dbApp = await DbApp().initDatabase();
+    
+    try {
+      final result = await _dbApp.delete("TypeServices", where: "id = ?", whereArgs: [id]);
 
-    return response;
+      return result;
+    } catch (e) {
+      return 0;
+    }
   }
 }

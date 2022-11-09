@@ -1,5 +1,5 @@
 import 'package:appsalao/models/worktask.dart';
-import 'package:appsalao/repositories/worktask.repository.dart';
+import 'package:appsalao/repositories/Api/worktask.repository.dart';
 import 'package:flutter/material.dart';
 import 'package:date_ranger/date_ranger.dart';
 
@@ -85,7 +85,7 @@ BuildListView(List<WorkTask> listWorkTasks) {
       return ListTile(
         leading: const Icon(Icons.account_circle),
         title: Text(listWorkTasks[index].client!.name ?? ""),
-        subtitle: Text(listWorkTasks[index].price.toString() ?? ""),
+        subtitle: Text(listWorkTasks[index].price.toString()),
         trailing: Text(date),
         onTap: () {
           // Navigator.of(context).push(MaterialPageRoute(

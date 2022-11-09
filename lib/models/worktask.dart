@@ -31,7 +31,7 @@ class WorkTask {
   WorkTask.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     dateInitial = DateTime.parse(json['dateInitial']);
-    dateEnd = DateTime.parse(json['dateEnd']);
+    dateEnd = json['dateEnd'] != "null" ? DateTime.parse(json['dateEnd']) : null;
     idClient = json['idClient'];
     client = json['client'] != null ? Client.fromJson(json['client']) : null;
     idService = json['idService'];

@@ -1,6 +1,6 @@
+import 'package:appsalao/controllers/ClientController.dart';
 import 'package:appsalao/models/client.dart';
 import 'package:appsalao/pages/Client/ActionsClient.page.dart';
-import 'package:appsalao/repositories/client.repository.dart';
 import 'package:flutter/material.dart';
 
 class ClientPage extends StatefulWidget {
@@ -12,7 +12,7 @@ class ClientPage extends StatefulWidget {
 
 class _ClientPageState extends State<ClientPage> {
   List<Client> clients = [];
-  final _clientRepository = ClientRepository();
+  final _clientRepository = ClientController();
   var aux;
   List<Client> resultFilterClient = [];
 

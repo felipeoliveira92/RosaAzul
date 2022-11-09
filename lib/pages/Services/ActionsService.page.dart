@@ -1,7 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'dart:developer';
 
-import 'package:appsalao/repositories/typeservices.repository.dart';
+import 'package:appsalao/controllers/TypeServiceController.dart';
 import 'package:flutter/material.dart';
 
 import 'package:appsalao/models/typeServices.dart';
@@ -22,7 +21,7 @@ class ActionsServicePage extends StatefulWidget {
 }
 
 class _ActionsServicePageState extends State<ActionsServicePage> {
-  final _serviceRepository = TypeServiceRepository();
+  final _typeServiceController = TypeServiceController();
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +42,7 @@ class _ActionsServicePageState extends State<ActionsServicePage> {
                   action: SnackBarAction(
                     label: 'Deletar',
                     onPressed: () {
-                      _serviceRepository.DeleteTypeService(widget.service.id);
+                      _typeServiceController.DeleteTypeService(widget.service.id);
                     },
                   ),
                 );
@@ -74,7 +73,7 @@ class _ActionsServicePageState extends State<ActionsServicePage> {
                 ),
                 TextFormField(
                   initialValue: widget.service.description ?? "",
-                  keyboardType: TextInputType.phone,
+                  keyboardType: TextInputType.text,
                   decoration: const InputDecoration(
                       border: OutlineInputBorder(), labelText: "Descrição", labelStyle: TextStyle(color: Colors.black)),
                   onChanged: (text) {
@@ -107,43 +106,31 @@ class _ActionsServicePageState extends State<ActionsServicePage> {
                             RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)))),
                     onPressed: () {
                       if (widget.action == "Create") {
-                        // _clientRepository.PostClient(widget.client).then((response) => {
-                        //     if (response.statusCode == 201)
-                        //     {
-                        //       Navigator.of(context).push(
-                        //           MaterialPageRoute(
-                        //               builder: (context) =>
-                        //                   const ServicePage()))
-                        //     }
-                        //     else
-                        //     {
-                        //       // ignore: prefer_const_constructors
-                        //       AlertDialog(
-                        //         title: const Text(
-                        //             'Basic dialog title'),
-                        //         content: const Text('A dialog'),
-                        //       )
-                        //     }
-                        // });
+                        final saved = _typeServiceController.PostTypeService(widget.service);
+
+                        if (saved != 0) {
+                          Navigator.of(context)
+                              .pushReplacement(MaterialPageRoute(builder: (context) => const ServicePage()));
+                        } else {
+                          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                            content: Text('Algo deu errado, não foi possivel salvar!'),
+                            behavior: SnackBarBehavior.floating,
+                            backgroundColor: Colors.redAccent,
+                          ));
+                        }
                       } else if (widget.action == "Edit") {
-                        // _clientRepository.UpdateClient(widget.client).then((response) => {
-                        //     if (response.statusCode == 200)
-                        //     {
-                        //       Navigator.of(context).push(
-                        //           MaterialPageRoute(
-                        //               builder: (context) =>
-                        //                   const ServicePage()))
-                        //     }
-                        //     else
-                        //     {
-                        //       // ignore: prefer_const_constructors
-                        //       AlertDialog(
-                        //         title: const Text(
-                        //             'Basic dialog title'),
-                        //         content: const Text('A dialog'),
-                        //       )
-                        //     }
-                        // });
+                        final edited = _typeServiceController.UpdateTypeService(widget.service);
+
+                        if (edited != 0) {
+                          Navigator.of(context)
+                              .pushReplacement(MaterialPageRoute(builder: (context) => const ServicePage()));
+                        } else {
+                          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                            content: Text('Algo deu errado, não foi possivel alterar!'),
+                            behavior: SnackBarBehavior.floating,
+                            backgroundColor: Colors.redAccent,
+                          ));
+                        }
                       }
                     },
                     child: Row(

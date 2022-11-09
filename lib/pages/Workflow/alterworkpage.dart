@@ -1,5 +1,6 @@
+import 'package:appsalao/controllers/WorkTaskController.dart';
 import 'package:appsalao/models/worktask.dart';
-import 'package:appsalao/repositories/worktask.repository.dart';
+import 'package:appsalao/repositories/Api/worktask.repository.dart';
 import 'package:flutter/material.dart';
 
 import 'calendarpage.dart';
@@ -14,7 +15,7 @@ class AlterWorkPage extends StatefulWidget {
 }
 
 class _AlterWorkPageState extends State<AlterWorkPage> {
-  final _workTaskRepository = WorkTaskRepository();
+  final _workTaskRepository = WorkTaskController();
   var timeSelected = TimeOfDay.now();
   @override
   Widget build(BuildContext context) {
@@ -129,8 +130,8 @@ class _AlterWorkPageState extends State<AlterWorkPage> {
                               shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                                   RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)))),
                           onPressed: () {
-                            _workTaskRepository.UpdateWorkTask(widget.workTask).then((response) => {
-                                  if (response.statusCode == 200)
+                            _workTaskRepository.UpdateWorkTask(widget.workTask).then((result) => {
+                                  if (result != 0)
                                     {
                                       Navigator.of(context).pushReplacement(
                                           MaterialPageRoute(builder: (context) => const calendarpage()))
