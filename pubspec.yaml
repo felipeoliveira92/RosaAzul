@@ -43,7 +43,8 @@ dependencies:
   shared_preferences: ^2.0.15
   sqflite: ^2.0.3+1
   path: ^1.8.1
-
+  firebase_core: ^2.2.0
+  firebase_auth: ^4.1.2
 
 flutter_native_splash:
   color: "#673AB7"

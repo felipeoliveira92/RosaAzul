@@ -2,6 +2,7 @@
 import 'package:appsalao/controllers/LoginController.dart';
 import 'package:appsalao/pages/Global/HomePage.dart';
 import 'package:appsalao/pages/Workflow/addworkpage.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatefulWidget {
@@ -15,6 +16,15 @@ class _LoginPageState extends State<LoginPage> {
   final _passwordController = TextEditingController();
   bool _seePassword = false;
   final _loginController = LoginController();
+
+  Future<FirebaseApp> _initializeFirebase() async {
+    FirebaseApp firebaseApp = await Firebase.initializeApp();
+    return firebaseApp;
+  }
+
+  _LoginPageState() {
+    _initializeFirebase();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -63,16 +73,20 @@ class _LoginPageState extends State<LoginPage> {
                     child: RaisedButton.icon(
                       onPressed: () {
                         _loginController.Login(_mailController.text, _passwordController.text).then((result) => {
-                          if (result == true) {
-                            Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => HomePage()))
-                          } else {
-                            ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                              content: Text('Usuario ou senha, invalidos!'),
-                              behavior: SnackBarBehavior.floating,
-                              backgroundColor: Colors.redAccent,
-                            ))
-                          }
-                        });                        
+                              if (result == true)
+                                {
+                                  Navigator.of(context)
+                                      .pushReplacement(MaterialPageRoute(builder: (context) => HomePage()))
+                                }
+                              else
+                                {
+                                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                                    content: Text('Usuario ou senha, invalidos!'),
+                                    behavior: SnackBarBehavior.floating,
+                                    backgroundColor: Colors.redAccent,
+                                  ))
+                                }
+                            });
                       },
                       color: Colors.white,
                       label: Text("ENTRAR"),

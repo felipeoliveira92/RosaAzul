@@ -16,18 +16,18 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    UserIsLogged().then((result) => {
-      if(result == true){
-        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => HomePage()))
-      }
-    });
+    // UserIsLogged().then((result) => {
+    //   if(result == true){
+    //     Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => HomePage()))
+    //   }
+    // });
     return MaterialApp(
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.deepPurple,
       ),
-      home: HomePage(),
+      home: LoginPage(),
     );
   }
 }
