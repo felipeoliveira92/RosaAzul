@@ -1,4 +1,5 @@
 import 'package:appsalao/models/worktask.dart';
+import 'package:appsalao/pages/viewModels/worktaskViewModel.dart';
 import 'package:appsalao/repositories/Api/worktask.repository.dart';
 import 'package:flutter/material.dart';
 import 'package:date_ranger/date_ranger.dart';
@@ -13,7 +14,7 @@ class _HistoricPageState extends State<HistoricPage> {
   var initialDate = DateTime.now();
   var initialDateRange = DateTimeRange(start: DateTime.now(), end: DateTime.now());
   final _workTaskRepository = WorkTaskRepository();
-  List<WorkTask> workTasks = [];
+  List<WorkTaskViewModel> workTasks = [];
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +42,7 @@ class _HistoricPageState extends State<HistoricPage> {
                         (list) {
                           setState(() {
                             initialDateRange = range;
-                            workTasks = list;
+                            //workTasks = list;
                           });
                         },
                       );
@@ -71,7 +72,7 @@ class _HistoricPageState extends State<HistoricPage> {
 }
 
 // ignore: non_constant_identifier_names
-BuildListView(List<WorkTask> listWorkTasks) {
+BuildListView(List<WorkTaskViewModel> listWorkTasks) {
   return ListView.builder(
     physics: const NeverScrollableScrollPhysics(),
     shrinkWrap: true,
@@ -84,7 +85,7 @@ BuildListView(List<WorkTask> listWorkTasks) {
           date += "${listWorkTasks[index].dateInitial!.minute}";
       return ListTile(
         leading: const Icon(Icons.account_circle),
-        title: Text(listWorkTasks[index].client!.name ?? ""),
+        title: Text(listWorkTasks[index].client?.name ?? ""),
         subtitle: Text(listWorkTasks[index].price.toString()),
         trailing: Text(date),
         onTap: () {

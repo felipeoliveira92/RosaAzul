@@ -8,7 +8,6 @@ class TypeServiceRepository {
   //final _dbApp = DbApp().database;
 
   Future<List<TypeService>> GetAll() async {
-
     final Database _dbApp = await DbApp().initDatabase();
     List<TypeService> typeServices = [];
 
@@ -18,27 +17,27 @@ class TypeServiceRepository {
 
       return typeServices;
     } catch (e) {
+      print(e);
       return typeServices;
     }
   }
 
   Future<TypeService> GetTypeServiceById(int id) async {
-
     final Database _dbApp = await DbApp().initDatabase();
     TypeService typeService = TypeService();
 
     try {
       final result = await _dbApp.rawQuery("SELECT * FROM TypeServices WHERE id = $id");
-      typeService = TypeService.fromJson(result.first);
+      typeService = result.map((e) => TypeService.fromJson(e)).first;
 
       return typeService;
     } catch (e) {
+      print(e);
       return typeService;
     }
   }
 
   Future<TypeService> GetTypeServiceByName(String name) async {
-
     final Database _dbApp = await DbApp().initDatabase();
     TypeService typeService = TypeService();
 
@@ -48,6 +47,7 @@ class TypeServiceRepository {
 
       return typeService;
     } catch (e) {
+      print(e);
       return typeService;
     }
   }
@@ -64,7 +64,6 @@ class TypeServiceRepository {
   }
 
   Future<int> UpdateTypeService(TypeService model) async {
-
     final Database _dbApp = await DbApp().initDatabase();
 
     try {
@@ -78,7 +77,7 @@ class TypeServiceRepository {
 
   Future<int> DeleteTypeService(int? id) async {
     final Database _dbApp = await DbApp().initDatabase();
-    
+
     try {
       final result = await _dbApp.delete("TypeServices", where: "id = ?", whereArgs: [id]);
 

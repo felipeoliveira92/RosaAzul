@@ -1,11 +1,10 @@
 // ignore_for_file: non_constant_identifier_names
 
 import 'package:appsalao/models/user.dart';
-import 'package:appsalao/pages/Generic/alterfields.page.dart';
 import 'package:appsalao/pages/User/ActionsUser.page.dart';
 import 'package:appsalao/pages/User/ChangePassword.page.dart';
 import 'package:appsalao/pages/User/login.page.dart';
-import 'package:appsalao/repositories/user.repository.dart';
+import 'package:appsalao/repositories/Sqlite/user_repository.dart';
 import 'package:flutter/material.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -20,7 +19,7 @@ class _ProfilePageState extends State<ProfilePage> {
   var user = User();
 
   void InicializeFields(){    
-    _userRepository.GetUserById(2).then((response) => {
+    _userRepository.getUserById(1).then((response) => {
       setState(() {
         user = response;
       })
@@ -28,8 +27,7 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   _ProfilePageState() {
-    InicializeFields();
-    
+    InicializeFields();    
   }  
 
   @override

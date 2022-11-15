@@ -36,7 +36,7 @@ class _AddWorkPageState extends State<AddWorkPage> {
       (value) {
         setState(() {
           autoCompleteclients = value;
-          var dateTime = DateTime.now();
+          var dateTime = DateTime.parse(widget.dateSelected);
           workTask.dateInitial =
               DateTime(dateTime.year, dateTime.month, dateTime.day, timeSelected.hour, timeSelected.minute);
         });
@@ -83,11 +83,6 @@ class _AddWorkPageState extends State<AddWorkPage> {
                             .map((e) => SearchFieldListItem(e.name.toString(), child: Text(e.name.toString())))
                             .toList(),
                         onSuggestionTap: (text) {
-                          // _clientsRepository.GetClientByName(text.searchKey).then((result) => {
-                          //       setState(() {
-                          //         workTask.client = result;
-                          //       })
-                          //     });
                           workTask.idClient =
                               autoCompleteclients.firstWhere((element) => element.name == text.searchKey).id;
                         },
@@ -110,11 +105,6 @@ class _AddWorkPageState extends State<AddWorkPage> {
                             .map((e) => SearchFieldListItem(e.name.toString(), child: Text(e.name.toString())))
                             .toList(),
                         onSuggestionTap: (text) {
-                          // _serviceRepository.GetTypeServiceByName(text.searchKey).then((result) => {
-                          //       setState(() {
-                          //         workTask.typeService = result;
-                          //       })
-                          //     });
                           workTask.idService =
                               autoCompleteServices.firstWhere((element) => element.name == text.searchKey).id;
                         },
@@ -162,7 +152,7 @@ class _AddWorkPageState extends State<AddWorkPage> {
                               if (time != null) {
                                 setState(() {
                                   timeSelected = TimeOfDay(hour: time.hour, minute: time.minute);
-                                  var dateTime = DateTime.now();
+                                  var dateTime = DateTime.parse(widget.dateSelected);
                                   workTask.dateInitial = DateTime(dateTime.year, dateTime.month, dateTime.day,
                                       timeSelected.hour, timeSelected.minute);
                                 });
@@ -215,6 +205,6 @@ class _AddWorkPageState extends State<AddWorkPage> {
 
 // ignore: prefer_const_constructors
 final snackBar = SnackBar(
-  content: const Text('Yay! A SnackBar!'),
+  content: const Text("Tivemos um problema em salvar os dados!"),
   backgroundColor: Colors.redAccent,
 );

@@ -1,12 +1,13 @@
 import 'package:appsalao/controllers/WorkTaskController.dart';
 import 'package:appsalao/models/worktask.dart';
+import 'package:appsalao/pages/viewModels/worktaskViewModel.dart';
 import 'package:appsalao/repositories/Api/worktask.repository.dart';
 import 'package:flutter/material.dart';
 
 import 'calendarpage.dart';
 
 class AlterWorkPage extends StatefulWidget {
-  WorkTask workTask;
+  WorkTaskViewModel workTask;
 
   AlterWorkPage({Key? key, required this.workTask}) : super(key: key);
 
@@ -22,6 +23,30 @@ class _AlterWorkPageState extends State<AlterWorkPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Alterando Serviço"),
+        actions: [
+          IconButton(
+            tooltip: "Deletar ${widget.workTask.client?.name ?? ''}",
+            icon: const Icon(Icons.delete),
+            onPressed: () {
+              final snackBar = SnackBar(
+                content: const Text('Realmente deseja deletar?'),
+                backgroundColor: Colors.redAccent,
+                action: SnackBarAction(
+                  label: 'Deletar',
+                  onPressed: () {
+                    var result = _workTaskRepository.DeleteWorkTask(widget.workTask.id ?? 0);
+
+                    if (result != 0) {
+                      Navigator.of(context)
+                          .pushReplacement(MaterialPageRoute(builder: (context) => const calendarpage()));
+                    }
+                  },
+                ),
+              );
+              ScaffoldMessenger.of(context).showSnackBar(snackBar);
+            },
+          ),
+        ],
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -91,7 +116,8 @@ class _AlterWorkPageState extends State<AlterWorkPage> {
                               padding: const EdgeInsets.all(16.0),
                               child: widget.workTask.dateInitial == null
                                   ? const Text("Selecione um horario: ", style: TextStyle(fontSize: 20))
-                                  : Text("Horario selecionado: ${widget.workTask.dateInitial?.hour}:${widget.workTask.dateInitial?.minute}",
+                                  : Text(
+                                      "Horario selecionado: ${widget.workTask.dateInitial?.hour}:${widget.workTask.dateInitial?.minute}",
                                       style: const TextStyle(fontSize: 20))),
                           IconButton(
                             alignment: Alignment.centerRight,
@@ -108,14 +134,9 @@ class _AlterWorkPageState extends State<AlterWorkPage> {
                               if (time != null) {
                                 setState(() {
                                   timeSelected = TimeOfDay(hour: time.hour, minute: time.minute);
-                                  var dateTime = DateTime.now();
-                                  // widget.workTask.dateInitial = DateTime(
-                                  //   dateTime.year,
-                                  //   dateTime.month,
-                                  //   dateTime.day,
-                                  //   timeSelected.hour,
-                                  //   timeSelected.minute
-                                  // ).toString();
+                                  var dateTime = DateTime.parse(widget.workTask.dateInitial.toString());
+                                  widget.workTask.dateInitial = DateTime(dateTime.year, dateTime.month, dateTime.day,
+                                      timeSelected.hour, timeSelected.minute);
                                 });
                               }
                             },
@@ -130,21 +151,22 @@ class _AlterWorkPageState extends State<AlterWorkPage> {
                               shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                                   RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)))),
                           onPressed: () {
-                            _workTaskRepository.UpdateWorkTask(widget.workTask).then((result) => {
-                                  if (result != 0)
-                                    {
-                                      Navigator.of(context).pushReplacement(
-                                          MaterialPageRoute(builder: (context) => const calendarpage()))
-                                    }
-                                  else
-                                    {
-                                      // ignore: prefer_const_constructors
-                                      AlertDialog(
-                                        title: const Text('Basic dialog title'),
-                                        content: const Text('A dialog'),
-                                      )
-                                    }
-                                });
+                            _workTaskRepository.UpdateWorkTask(WorkTask.fromJson(widget.workTask.toJson()))
+                                .then((result) => {
+                                      if (result != 0)
+                                        {
+                                          Navigator.of(context).pushReplacement(
+                                              MaterialPageRoute(builder: (context) => const calendarpage()))
+                                        }
+                                      else
+                                        {
+                                          // ignore: prefer_const_constructors
+                                          AlertDialog(
+                                            title: const Text('Basic dialog title'),
+                                            content: const Text('A dialog'),
+                                          )
+                                        }
+                                    });
                           },
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
