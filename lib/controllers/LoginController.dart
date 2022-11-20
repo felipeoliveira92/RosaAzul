@@ -1,5 +1,6 @@
 // ignore_for_file: file_names, non_constant_identifier_names
 
+import 'package:appsalao/Global/user_logged.dart';
 import 'package:appsalao/models/user.dart' as userApp;
 import 'package:appsalao/repositories/Sqlite/user_repository.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -24,10 +25,12 @@ class LoginController {
           if (!value)
           {
             updateUser(user),
+            userLogged = user,
           }
           else
           {
             postUser(user),
+            userLogged = user,
           }
         });
 

@@ -27,4 +27,8 @@ class UserController {
   Future<bool> userIsEmpty() async {
     return await _userRepository.userIsEmpty();
   }
+
+  Future<int> alterPassword(String newPassword, int id) async {
+    return await _userRepository.alterPassword(newPassword, id);
+  }
 }

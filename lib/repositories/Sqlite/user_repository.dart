@@ -84,4 +84,14 @@ class UserRepository {
       return false;
     }
   }
+
+  Future<int> alterPassword(String newPassword, int id) async {
+    final Database dbApp = await DbApp().initDatabase();
+
+    try {
+      return await dbApp.rawUpdate("UPDATE $nameTable SET password = $newPassword WHERE id = $id");
+    } catch (e) {
+      return 0;
+    }
+  }
 }
