@@ -74,18 +74,18 @@ class _LoginPageState extends State<LoginPage> {
                       onPressed: () {
                         _loginController.Login(_mailController.text, _passwordController.text).then((result) => {
                               if (result == true)
-                                {
-                                  Navigator.of(context)
-                                      .pushReplacement(MaterialPageRoute(builder: (context) => HomePage()))
-                                }
+                              {
+                                Navigator.of(context)
+                                    .pushReplacement(MaterialPageRoute(builder: (context) => HomePage()))
+                              }
                               else
-                                {
-                                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                                    content: Text('Usuario ou senha, invalidos!'),
-                                    behavior: SnackBarBehavior.floating,
-                                    backgroundColor: Colors.redAccent,
-                                  ))
-                                }
+                              {
+                                ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                                  content: Text('Usuario ou senha, invalidos!'),
+                                  behavior: SnackBarBehavior.floating,
+                                  backgroundColor: Colors.redAccent,
+                                ))
+                              }
                             });
                       },
                       color: Colors.white,

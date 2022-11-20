@@ -4,7 +4,8 @@ const String createTableUsers = '''
       name TEXT,
       username TEXT,
       password TEXT,
-      type INT
+      type INT,
+      isLogged BOOL
     );
   ''';
 

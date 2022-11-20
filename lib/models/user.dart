@@ -6,8 +6,9 @@ class User {
   String? username;
   String? password;
   int? type;
+  bool? isLogged;
 
-  User({this.id, this.name, this.username, this.password, this.type});
+  User({this.id, this.name, this.username, this.password, this.type, this.isLogged});
 
   User.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -15,6 +16,7 @@ class User {
     username = json['username'];
     password = json['password'];
     type = json['type'];
+    isLogged = json['isLogged'];
   }
 
   Map<String, dynamic> toJson() {
@@ -24,6 +26,10 @@ class User {
     data['username'] = username;
     data['password'] = password;
     data['type'] = type;
+    data['isLogged'] = isLogged;
     return data;
   }
 }
+
+// ignore: camel_case_types
+enum typeUser { user, administrator, client }

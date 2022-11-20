@@ -2,11 +2,10 @@
 
 import 'dart:io';
 
+import 'package:appsalao/controllers/user_controller.dart';
 import 'package:appsalao/pages/Global/HomePage.dart';
-import 'package:appsalao/pages/Services/Service.page.dart';
 import 'package:appsalao/pages/User/login.page.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
   HttpOverrides.global = MyHttpOverrides();
@@ -16,13 +15,15 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    // UserIsLogged().then((result) => {
-    //   if(result == true){
-    //     Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => HomePage()))
-    //   }
-    // });
+    final userRepository = UserController();
+
+    userRepository.userIsLogged().then((result) => {
+      if (result == true)
+        {Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => HomePage()))}
+    });
+
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Rosa Azul',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.deepPurple,
@@ -37,17 +38,5 @@ class MyHttpOverrides extends HttpOverrides {
   HttpClient createHttpClient(SecurityContext? context) {
     return super.createHttpClient(context)
       ..badCertificateCallback = (X509Certificate cert, String host, int port) => true;
-  }
-}
-
-Future<bool> UserIsLogged() async {
-  var _sharedPrefer = await SharedPreferences.getInstance();
-
-  var logged = _sharedPrefer.getString('logado');
-
-  if (logged == "true") {
-    return true;
-  } else {
-    return false;
   }
 }
