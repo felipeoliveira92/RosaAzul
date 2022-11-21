@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable, prefer_typing_uninitialized_variables
+
 import 'package:flutter/material.dart';
 
 class AlterFields extends StatefulWidget {
@@ -28,11 +30,11 @@ class _AlterFieldsState extends State<AlterFields> {
             children: <Widget>[
               Center(
                   child: Text(
-                "Editar ${widget.labelfield != null ? widget.labelfield : ''}",
-                style: TextStyle(fontSize: 20),
+                "Editar ${widget.labelfield ?? ''}",
+                style: const TextStyle(fontSize: 20),
               )),
               TextFormField(
-                initialValue: widget.valueField != null ? widget.valueField : '',
+                initialValue: widget.valueField ?? '',
                 keyboardType: TextInputType.text,
                 style: const TextStyle(color: Colors.black, fontSize: 20),
                 decoration: const InputDecoration(

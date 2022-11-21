@@ -1,3 +1,5 @@
+// ignore_for_file: no_leading_underscores_for_local_identifiers
+
 import 'package:appsalao/database/db.dart';
 import 'package:appsalao/models/user.dart';
 import 'package:sqflite/sqflite.dart';

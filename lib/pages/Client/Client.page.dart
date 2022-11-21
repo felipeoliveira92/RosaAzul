@@ -13,7 +13,7 @@ class ClientPage extends StatefulWidget {
 class _ClientPageState extends State<ClientPage> {
   List<Client> clients = [];
   final _clientRepository = ClientController();
-  var aux;
+  List<Client> aux = [];
   List<Client> resultFilterClient = [];
 
   _ClientPageState() {

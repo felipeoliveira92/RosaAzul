@@ -1,9 +1,7 @@
-// ignore_for_file: non_constant_identifier_names
+// ignore_for_file: non_constant_identifier_names, file_names
 
 import 'package:appsalao/controllers/ClientController.dart';
 import 'package:appsalao/controllers/TypeServiceController.dart';
-import 'package:appsalao/models/client.dart';
-import 'package:appsalao/models/typeServices.dart';
 import 'package:appsalao/models/worktask.dart';
 import 'package:appsalao/pages/viewModels/worktaskViewModel.dart';
 import 'package:appsalao/repositories/Sqlite/WorkTaskRepository.dart';

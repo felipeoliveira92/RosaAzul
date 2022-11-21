@@ -1,3 +1,5 @@
+// ignore_for_file: file_names, prefer_const_constructors_in_immutables
+
 import 'package:appsalao/pages/Client/Client.page.dart';
 import 'package:appsalao/pages/Services/Service.page.dart';
 import 'package:appsalao/pages/Workflow/calendarpage.dart';

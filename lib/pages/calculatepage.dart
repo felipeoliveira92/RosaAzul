@@ -1,3 +1,5 @@
+// ignore_for_file: camel_case_types, library_private_types_in_public_api, annotate_overrides
+
 import 'package:flutter/material.dart';
 
 class calculatepage extends StatefulWidget {

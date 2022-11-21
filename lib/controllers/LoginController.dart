@@ -1,4 +1,4 @@
-// ignore_for_file: file_names, non_constant_identifier_names
+// ignore_for_file: file_names, non_constant_identifier_names, library_prefixes
 
 import 'package:appsalao/Global/user_logged.dart';
 import 'package:appsalao/models/user.dart' as userApp;
