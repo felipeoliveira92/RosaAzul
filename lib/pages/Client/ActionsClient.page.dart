@@ -2,6 +2,7 @@
 import 'package:appsalao/controllers/ClientController.dart';
 import 'package:appsalao/models/client.dart';
 import 'package:appsalao/pages/Client/Client.page.dart';
+import 'package:appsalao/pages/viewModels/worktaskViewModel.dart';
 import 'package:flutter/material.dart';
 
 class ActionsClient extends StatefulWidget {
@@ -19,6 +20,14 @@ class _ActionsClientState extends State<ActionsClient> {
 
   @override
   Widget build(BuildContext context) {
+    List<WorkTaskViewModel> historic = [];
+
+    _clientRepository.GetHistoric(widget.client.id ?? 0).then((value) {
+      setState(() {
+        historic = value;
+      });
+    });
+
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -150,13 +159,13 @@ class _ActionsClientState extends State<ActionsClient> {
                   ListView.builder(
                     physics: const NeverScrollableScrollPhysics(),
                     shrinkWrap: true,
-                    itemCount: 10,
+                    itemCount: historic.length,
                     itemBuilder: (context, index) {
-                      return const ListTile(
+                      return ListTile(
                         leading: Icon(Icons.account_circle),
-                        title: Text("clients[index].name.toString()"),
-                        subtitle: Text("clients[index].cellphone.toString()"),
-                        trailing: Text("data"),
+                        title: Text(historic[index].typeService?.name ?? ""),
+                        subtitle: Text(historic[index].price.toString()),
+                        trailing: Text(historic[index].dateInitial.toString()),
 
                         // onTap: () {
                         //   Client clientSelected = clients[index];

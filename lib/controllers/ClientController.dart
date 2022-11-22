@@ -1,7 +1,7 @@
-
 // ignore_for_file: non_constant_identifier_names, file_names
 
 import 'package:appsalao/models/client.dart';
+import 'package:appsalao/pages/viewModels/worktaskViewModel.dart';
 import '../repositories/Sqlite/ClientRepository.dart';
 
 class ClientController {
@@ -29,5 +29,9 @@ class ClientController {
 
   Future<int> DeleteClient(int? id) async {
     return await _clientRepository.DeleteClient(id);
+  }
+
+  Future<List<WorkTaskViewModel>> GetHistoric(int id) async {
+    return await _clientRepository.GetHistoric(id);
   }
 }

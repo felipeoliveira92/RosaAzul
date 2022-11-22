@@ -39,7 +39,7 @@ class _ServicePageState extends State<ServicePage> {
             trailing: const Icon(Icons.navigate_next),
             onTap: () {
               serviceSelected = listServices[index];
-              Navigator.of(context).push(MaterialPageRoute(
+              Navigator.of(context).pushReplacement(MaterialPageRoute(
                   builder: (context) => ActionsServicePage(action: "Edit", service: serviceSelected)));
             },
           );
@@ -47,7 +47,7 @@ class _ServicePageState extends State<ServicePage> {
       ),
       floatingActionButton: FloatingActionButton.small(
         child: const Icon(Icons.add),
-        onPressed: () => Navigator.of(context).push(
+        onPressed: () => Navigator.of(context).pushReplacement(
             MaterialPageRoute(builder: (context) => ActionsServicePage(action: "Create", service: TypeService()))),
       ),
     );

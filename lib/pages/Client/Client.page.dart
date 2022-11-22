@@ -50,7 +50,7 @@ class _ClientPageState extends State<ClientPage> {
                   //faço o filtro pelo campo nome cliente
                   if (text != "") {
                     aux = clients
-                        .where((element) => element.name!.contains(text)).toList();
+                        .where((element) => element.name!.toLowerCase().contains(text.toLowerCase())).toList();
                     if (aux.isNotEmpty) {
                       setState(() {
                         resultFilterClient = [];
@@ -102,7 +102,7 @@ class _ClientPageState extends State<ClientPage> {
                   ),
                   onTap: () {
                     Client clientSelected = resultFilterClient[index];
-                    Navigator.of(context).push(MaterialPageRoute(
+                    Navigator.of(context).pushReplacement(MaterialPageRoute(
                         builder: (context) => ActionsClient(
                             action: "Edit", client: clientSelected)));
                   },
@@ -114,7 +114,7 @@ class _ClientPageState extends State<ClientPage> {
       ),
       floatingActionButton: FloatingActionButton.small(
         tooltip: "Adicionar novo Cliente",
-        onPressed: () => Navigator.of(context).push(
+        onPressed: () => Navigator.of(context).pushReplacement(
           MaterialPageRoute(
               builder: (context) =>
                   ActionsClient(action: "Create", client: Client())),

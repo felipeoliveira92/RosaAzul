@@ -64,7 +64,10 @@ class UserRepository {
     try {
       final result = await _dbApp.rawQuery("SELECT * FROM $nameTable");
 
-      if (User.fromJson(result.first).isLogged == true) return true;
+      if(result.isNotEmpty)
+      {
+        if (User.fromJson(result.first).isLogged == true) return true;
+      }      
 
       return false;
     } catch (e) {

@@ -2,10 +2,10 @@
 
 import 'package:appsalao/database/db.dart';
 import 'package:appsalao/models/client.dart';
+import 'package:appsalao/pages/viewModels/worktaskViewModel.dart';
 import 'package:sqflite/sqflite.dart';
 
 class ClientRepository {
-  
   static String nameTable = "Clients";
 
   Future<List<Client>> GetAll() async {
@@ -79,6 +79,20 @@ class ClientRepository {
       return result;
     } catch (e) {
       return 0;
+    }
+  }
+
+  Future<List<WorkTaskViewModel>> GetHistoric(int id) async {
+    final Database _dbApp = await DbApp().initDatabase();
+    List<WorkTaskViewModel> historic = [];
+    try {
+      final result = await _dbApp.rawQuery("SELECT * FROM Works WHERE idClient = $id");
+
+      historic = result.map((w) => WorkTaskViewModel.fromJson(w)).toList();
+      return historic;
+    } catch (e) {
+      print(e);
+      return historic;
     }
   }
 }
