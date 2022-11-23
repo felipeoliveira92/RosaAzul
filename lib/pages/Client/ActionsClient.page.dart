@@ -28,6 +28,8 @@ class _ActionsClientState extends State<ActionsClient> {
       });
     });
 
+    
+
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -162,7 +164,7 @@ class _ActionsClientState extends State<ActionsClient> {
                     itemCount: historic.length,
                     itemBuilder: (context, index) {
                       return ListTile(
-                        leading: Icon(Icons.account_circle),
+                        leading: const Icon(Icons.account_circle),
                         title: Text(historic[index].typeService?.name ?? ""),
                         subtitle: Text(historic[index].price.toString()),
                         trailing: Text(historic[index].dateInitial.toString()),

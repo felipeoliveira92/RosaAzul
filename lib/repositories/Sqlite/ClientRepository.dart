@@ -80,19 +80,5 @@ class ClientRepository {
     } catch (e) {
       return 0;
     }
-  }
-
-  Future<List<WorkTaskViewModel>> GetHistoric(int id) async {
-    final Database _dbApp = await DbApp().initDatabase();
-    List<WorkTaskViewModel> historic = [];
-    try {
-      final result = await _dbApp.rawQuery("SELECT * FROM Works WHERE idClient = $id");
-
-      historic = result.map((w) => WorkTaskViewModel.fromJson(w)).toList();
-      return historic;
-    } catch (e) {
-      print(e);
-      return historic;
-    }
-  }
+  }  
 }

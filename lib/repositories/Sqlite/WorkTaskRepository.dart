@@ -105,15 +105,17 @@ class WorkTaskRepository {
     }
   }
 
-  Future<List<WorkTaskViewModel>?> GetHistoric(int id) async {
+  Future<List<WorkTaskViewModel>> GetHistoric(int id) async {
     final Database _dbApp = await DbApp().initDatabase();
+    List<WorkTaskViewModel> worktasks = [];
     try {
       final result = await _dbApp.rawQuery("SELECT * FROM $nameTable WHERE idClient = $id");
 
-      return result.map((w) => WorkTaskViewModel.fromJson(w)).toList();
+      worktasks = result.map((w) => WorkTaskViewModel.fromJson(w)).toList();
+      return worktasks;
     } catch (e) {
       print(e);
-      return null;
+      return worktasks;
     }
   }
 }

@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:appsalao/models/user.dart';
-import 'package:appsalao/repositories/user.repository.dart';
+import 'package:appsalao/repositories/Api/user.repository.dart';
 
 class ActionsUserPage extends StatefulWidget {
   User user;

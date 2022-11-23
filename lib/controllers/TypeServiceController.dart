@@ -1,7 +1,7 @@
 // ignore_for_file: file_names, non_constant_identifier_names
 
 import '../models/typeServices.dart';
-import '../repositories/typeservices.repository.dart';
+import '../repositories/Sqlite/typeservices.repository.dart';
 
 class TypeServiceController {
   final typeServiceRepository = TypeServiceRepository();

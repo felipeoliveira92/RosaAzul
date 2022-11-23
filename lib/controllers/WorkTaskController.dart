@@ -20,7 +20,7 @@ class WorkTaskController {
   Future<List<WorkTaskViewModel>> GetAllByDate(DateTime date) async {
     var worktasks = await _context.GetAllByDate(date);
 
-    return await _GetClientsAndServices(worktasks);    
+    return await _GetClientsAndServices(worktasks);
   }
 
   Future<WorkTaskViewModel> GetWorkTaskById(int id) async {
@@ -45,6 +45,12 @@ class WorkTaskController {
 
   Future<int> DeleteWorkTask(int id) async {
     return await _context.DeleteWorkTask(id);
+  }
+
+  Future<List<WorkTaskViewModel>> GetHistoric(int id) async {    
+    var worktasks = await _context.GetHistoric(id);
+
+    return await _GetClientsAndServices(worktasks);
   }
 
   Future<List<WorkTaskViewModel>> _GetClientsAndServices(List<WorkTaskViewModel> model) async {
